@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+  :root {
+    --base:#1e1e2e; --surface0:#313244; --surface1:#45475a;
+    --overlay0:#6c7086; --text:#cdd6f4; --sub1:#bac2de;
+    --mauve:#cba6f7; --green:#a6e3a1; --red:#f38ba8;
+    --yellow:#f9e2af; --blue:#89b4fa; --teal:#94e2d5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:220px;height:260px;background:transparent;font-family:'Inter','Segoe UI',sans-serif;color:var(--text);overflow:hidden;}
+  .root{width:100%;height:100%;background:var(--base);border:1px solid var(--surface0);border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:16px 14px;gap:0;}
+
+  .mode-tabs{display:flex;gap:4px;width:100%;margin-bottom:12px;}
+  .mtab{flex:1;padding:4px;font-size:9px;border:1px solid var(--surface1);border-radius:5px;background:none;color:var(--overlay0);cursor:pointer;transition:all .15s;font-family:inherit;text-align:center;}
+  .mtab.active{color:var(--base);border-color:transparent;}
+  .mtab.work.active   {background:var(--red);}
+  .mtab.short.active  {background:var(--green);}
+  .mtab.long.active   {background:var(--blue);}
+
+  /* Circular timer */
+  .timer-wrap{position:relative;width:110px;height:110px;margin:0 auto 10px;}
+  .timer-svg{width:110px;height:110px;transform:rotate(-90deg);}
+  .timer-track{fill:none;stroke:var(--surface1);stroke-width:5;}
+  .timer-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .9s ease,stroke .3s;}
+  .timer-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+  .timer-time{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:var(--text);line-height:1;}
+  .timer-label{font-size:9px;color:var(--overlay0);margin-top:2px;letter-spacing:.5px;text-transform:uppercase;}
+
+  /* Controls */
+  .controls{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .ctrl{background:none;border:1px solid var(--surface1);border-radius:8px;color:var(--sub1);cursor:pointer;font-size:14px;padding:6px 10px;transition:all .15s;}
+  .ctrl:hover{border-color:var(--mauve);color:var(--mauve);}
+  .ctrl.play{background:var(--mauve);border-color:var(--mauve);color:var(--base);font-size:16px;padding:6px 14px;}
+  .ctrl.play:hover{opacity:.85;}
+  .ctrl.reset{font-size:12px;}
+
+  /* Stats */
+  .stats{width:100%;background:var(--surface0);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-around;}
+  .stat{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .stat-val{font-size:16px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .stat-lbl{font-size:9px;color:var(--overlay0);letter-spacing:.3px;}
+
+  /* Session dots */
+  .sessions{display:flex;gap:4px;margin-top:8px;}
+  .sdot{width:8px;height:8px;border-radius:50%;background:var(--surface1);transition:background .3s;}
+  .sdot.done{background:var(--green);}
+  .sdot.current{background:var(--red);animation:pulse-s 1.5s ease infinite;}
+  @keyframes pulse-s{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="mode-tabs">
+    <button class="mtab work active" onclick="setMode('work',25,'Çalışma')">Çalışma</button>
+    <button class="mtab short" onclick="setMode('short',5,'Kısa Mola')">Kısa</button>
+    <button class="mtab long"  onclick="setMode('long',15,'Uzun Mola')">Uzun</button>
+  </div>
+
+  <div class="timer-wrap">
+    <svg class="timer-svg" viewBox="0 0 110 110">
+      <circle class="timer-track" cx="55" cy="55" r="50"/>
+      <circle class="timer-fill" id="timerFill" cx="55" cy="55" r="50"
+        stroke="#f38ba8"
+        stroke-dasharray="314.16"
+        stroke-dashoffset="0"/>
+    </svg>
+    <div class="timer-text">
+      <span class="timer-time" id="timerDisplay">25:00</span>
+      <span class="timer-label" id="timerLabel">Çalışma</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl reset" onclick="resetTimer()">↺</button>
+    <button class="ctrl play" id="playBtn" onclick="toggleTimer()">▶</button>
+    <button class="ctrl" onclick="skip()" title="Atla">⏭</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-val" id="todayPomodoros" style="color:var(--red)">0</span>
+      <span class="stat-lbl">Bugün</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val" id="totalPomodoros" style="color:var(--mauve)">0</span>
+      <span class="stat-lbl">Toplam</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val" id="streak" style="color:var(--yellow)">0</span>
+      <span class="stat-lbl">Seri</span>
+    </div>
+  </div>
+
+  <div class="sessions" id="sessions">
+    <div class="sdot"></div>
+    <div class="sdot"></div>
+    <div class="sdot"></div>
+    <div class="sdot"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ─── State ────────────────────────────────────────────────────────────────
+  const MODES = {
+    work:  { label:'Çalışma',   mins:25, color:'#f38ba8' },
+    short: { label:'Kısa Mola', mins:5,  color:'#a6e3a1' },
+    long:  { label:'Uzun Mola', mins:15, color:'#89b4fa' },
+  };
+
+  let mode      = 'work';
+  let totalSecs = 25*60;
+  let remaining = 25*60;
+  let running   = false;
+  let timer     = null;
+  let sessions  = 0; // bu seride tamamlanan pomodoro sayısı
+  let windy;
+
+  // Stats (storage'dan yüklenir)
+  let stats = { today:0, total:0, streak:0, lastDate:'' };
+
+  const CIRC = 2 * Math.PI * 50; // 314.16
+
+  // ─── DOM refs ─────────────────────────────────────────────────────────────
+  const $display = document.getElementById('timerDisplay');
+  const $label   = document.getElementById('timerLabel');
+  const $fill    = document.getElementById('timerFill');
+  const $play    = document.getElementById('playBtn');
+
+  // ─── Render ───────────────────────────────────────────────────────────────
+  function render() {
+    const m  = Math.floor(remaining/60);
+    const s  = remaining % 60;
+    $display.textContent = m + ':' + String(s).padStart(2,'0');
+    $label.textContent   = MODES[mode].label;
+
+    const pct = remaining / totalSecs;
+    $fill.style.strokeDashoffset = CIRC * pct;
+    $fill.style.stroke = MODES[mode].color;
+
+    $play.textContent = running ? '⏸' : '▶';
+
+    // Session dots
+    const dots = document.getElementById('sessions');
+    dots.innerHTML = '';
+    for (let i=0; i<4; i++) {
+      const d = document.createElement('div');
+      d.className = 'sdot' + (i < sessions ? ' done' : i === sessions && mode==='work' ? ' current' : '');
+      dots.appendChild(d);
+    }
+
+    // Stats
+    document.getElementById('todayPomodoros').textContent = stats.today;
+    document.getElementById('totalPomodoros').textContent = stats.total;
+    document.getElementById('streak').textContent         = stats.streak;
+  }
+
+  // ─── Controls ─────────────────────────────────────────────────────────────
+  window.toggleTimer = function() {
+    if (running) {
+      clearInterval(timer); running = false;
+    } else {
+      running = true;
+      timer = setInterval(tick, 1000);
+    }
+    render();
+  };
+
+  window.resetTimer = function() {
+    clearInterval(timer); running = false;
+    remaining = totalSecs;
+    render();
+  };
+
+  window.setMode = function(m, mins, label) {
+    clearInterval(timer); running = false;
+    mode = m; totalSecs = mins*60; remaining = mins*60;
+    document.querySelectorAll('.mtab').forEach(el => el.classList.remove('active'));
+    const tab = document.querySelector(`.mtab.${m}`);
+    if (tab) tab.classList.add('active');
+    render();
+  };
+
+  window.skip = function() {
+    clearInterval(timer); running = false;
+    onComplete(true);
+  };
+
+  function tick() {
+    remaining--;
+    if (remaining <= 0) onComplete(false);
+    else render();
+  }
+
+  function onComplete(skipped) {
+    clearInterval(timer); running = false;
+
+    if (mode === 'work' && !skipped) {
+      sessions = (sessions + 1) % 4;
+      stats.today++;
+      stats.total++;
+
+      const today = new Date().toDateString();
+      if (stats.lastDate === today) {
+        stats.streak++;
+      } else {
+        stats.streak = 1;
+        stats.lastDate = today;
+        if (stats.lastDate && stats.lastDate !== today) stats.streak = 1;
+      }
+      saveStats();
+
+      // Bildirim
+      if (windy) windy.system.notify('🍅 Pomodoro', 'Tebrikler! Mola zamanı.');
+
+      // Otomatik mola moda geç
+      if (sessions === 0) setMode('long', 15, 'Uzun Mola');
+      else                setMode('short', 5, 'Kısa Mola');
+    } else if (mode !== 'work') {
+      if (windy) windy.system.notify('⏰ Windy', 'Mola bitti, çalışmaya devam!');
+      setMode('work', 25, 'Çalışma');
+    }
+
+    render();
+  }
+
+  // ─── Storage ──────────────────────────────────────────────────────────────
+  async function saveStats() {
+    if (!windy) return;
+    await windy.storage.set('pomo_stats', stats).catch(() => {});
+  }
+
+  async function loadStats() {
+    if (!windy) return;
+    const saved = await windy.storage.get('pomo_stats').catch(() => null);
+    if (saved) {
+      // Bugün farklıysa today sayacını sıfırla
+      const today = new Date().toDateString();
+      if (saved.lastDate !== today) saved.today = 0;
+      stats = { ...stats, ...saved };
+    }
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  async function init() {
+    windy = window.__windy__;
+    if (windy) await loadStats();
+    render();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>

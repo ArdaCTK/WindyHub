@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+  :root {
+    --base:#1e1e2e; --surface0:#313244; --surface1:#45475a;
+    --overlay0:#6c7086; --text:#cdd6f4; --sub1:#bac2de;
+    --mauve:#cba6f7; --blue:#89b4fa; --green:#a6e3a1;
+    --yellow:#f9e2af; --peach:#fab387; --red:#f38ba8; --teal:#94e2d5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:340px;height:320px;background:transparent;font-family:'Inter','Segoe UI',sans-serif;color:var(--text);overflow:hidden;}
+  .root{width:100%;height:100%;background:var(--base);border:1px solid var(--surface0);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;}
+  .header{padding:16px 18px 8px;display:flex;align-items:center;justify-content:space-between;}
+  .current{display:flex;align-items:center;gap:14px;}
+  .weather-icon{font-size:44px;line-height:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));}
+  .current-info{}
+  .temp{font-size:36px;font-weight:300;color:var(--text);line-height:1;}
+  .temp span{font-size:18px;color:var(--overlay0);}
+  .condition{font-size:12px;color:var(--sub1);margin-top:2px;}
+  .city{font-size:11px;color:var(--overlay0);margin-top:1px;}
+  .details{display:flex;gap:6px;padding:0 18px 8px;}
+  .detail-chip{background:var(--surface0);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--sub1);display:flex;flex-direction:column;gap:1px;}
+  .detail-chip span:first-child{color:var(--overlay0);font-size:9px;}
+  .chart-wrap{flex:1;padding:4px 12px 8px;}
+  .chart-wrap canvas{width:100%!important;}
+  .days{display:flex;padding:0 12px 12px;gap:4px;}
+  .day{flex:1;background:var(--surface0);border-radius:8px;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .day-name{font-size:9px;color:var(--overlay0);text-transform:uppercase;letter-spacing:.5px;}
+  .day-icon{font-size:16px;}
+  .day-hi{font-size:11px;font-weight:600;color:var(--peach);}
+  .day-lo{font-size:10px;color:var(--blue);}
+  .loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--overlay0);font-size:12px;gap:8px;}
+  .spin{width:14px;height:14px;border:2px solid var(--surface1);border-top-color:var(--mauve);border-radius:50%;animation:sp .7s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="root" id="root">
+  <div class="loading" id="loading"><div class="spin"></div> Hava durumu yükleniyor…</div>
+</div>
+<script>
+(function() {
+  // Türkiye varsayılan konum (geolocation yoksa)
+  const DEFAULT_LAT = 38.4192; // İzmir
+  const DEFAULT_LON = 27.1287;
+
+  const WMO_ICONS = {
+    0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️',
+    45:'🌫', 48:'🌫',
+    51:'🌦', 53:'🌦', 55:'🌧',
+    61:'🌧', 63:'🌧', 65:'🌧',
+    71:'🌨', 73:'🌨', 75:'❄️',
+    80:'🌦', 81:'🌧', 82:'⛈',
+    95:'⛈', 96:'⛈', 99:'⛈'
+  };
+
+  const WMO_LABELS = {
+    0:'Açık', 1:'Çoğunlukla Açık', 2:'Parçalı Bulutlu', 3:'Bulutlu',
+    45:'Sisli', 48:'Sisli',
+    51:'Çisenti', 53:'Çisenti', 55:'Yoğun Çisenti',
+    61:'Hafif Yağmur', 63:'Yağmur', 65:'Yoğun Yağmur',
+    71:'Hafif Kar', 73:'Kar', 75:'Yoğun Kar',
+    80:'Sağanak', 81:'Kuvvetli Sağanak', 82:'Çok Kuvvetli Sağanak',
+    95:'Gök Gürültülü', 96:'Fırtına', 99:'Şiddetli Fırtına'
+  };
+
+  const DAYS_TR = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+
+  let chart = null;
+
+  async function fetchWeather(lat, lon) {
+    const url = `https://api.open-meteo.com/v1/forecast?` +
+      `latitude=${lat}&longitude=${lon}` +
+      `&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m,apparent_temperature` +
+      `&hourly=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min` +
+      `&timezone=auto&forecast_days=7`;
+    const r = await fetch(url);
+    return r.json();
+  }
+
+  async function fetchCity(lat, lon) {
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+      const d = await r.json();
+      return d.address?.city || d.address?.town || d.address?.county || 'Bilinmeyen';
+    } catch { return 'Bilinmeyen'; }
+  }
+
+  function render(data, city) {
+    const c   = data.current;
+    const code = c.weathercode;
+    const hourly = data.hourly;
+    const daily  = data.daily;
+
+    // Sonraki 24 saat (8 veri noktası)
+    const now  = new Date();
+    const nowH = now.getHours();
+    const sliceStart = hourly.time.findIndex(t => new Date(t).getHours() >= nowH);
+    const hours = hourly.time.slice(sliceStart, sliceStart+8).map(t => {
+      const h = new Date(t).getHours();
+      return h.toString().padStart(2,'0') + ':00';
+    });
+    const temps = hourly.temperature_2m.slice(sliceStart, sliceStart+8);
+
+    document.getElementById('root').innerHTML = `
+      <div class="header">
+        <div class="current">
+          <div class="weather-icon">${WMO_ICONS[code]||'🌤'}</div>
+          <div class="current-info">
+            <div class="temp">${Math.round(c.temperature_2m)}<span>°C</span></div>
+            <div class="condition">${WMO_LABELS[code]||'Bilinmeyen'}</div>
+            <div class="city">📍 ${city}</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="detail-chip"><span>Hissedilen</span>${Math.round(c.apparent_temperature)}°C</div>
+        <div class="detail-chip"><span>Nem</span>${c.relativehumidity_2m}%</div>
+        <div class="detail-chip"><span>Rüzgar</span>${Math.round(c.windspeed_10m)} km/h</div>
+        <div class="detail-chip"><span>En Yüksek</span>${Math.round(daily.temperature_2m_max[0])}°C</div>
+        <div class="detail-chip"><span>En Düşük</span>${Math.round(daily.temperature_2m_min[0])}°C</div>
+      </div>
+      <div class="chart-wrap"><canvas id="tempChart" height="80"></canvas></div>
+      <div class="days" id="days"></div>
+    `;
+
+    // Chart.js — 24h sıcaklık grafiği
+    const ctx = document.getElementById('tempChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type:'line',
+      data: {
+        labels: hours,
+        datasets:[{
+          data: temps,
+          borderColor: '#cba6f7',
+          backgroundColor: 'rgba(203,166,247,0.15)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 3,
+          pointBackgroundColor: '#cba6f7',
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        animation:false,
+        plugins:{ legend:{display:false}, tooltip:{
+          backgroundColor:'#313244', titleColor:'#cdd6f4', bodyColor:'#bac2de',
+          padding:8, displayColors:false,
+          callbacks:{ label: ctx => ctx.parsed.y.toFixed(1) + '°C' }
+        }},
+        scales:{
+          x:{ ticks:{color:'#6c7086',font:{size:9}}, grid:{color:'#31324440'} },
+          y:{ ticks:{color:'#6c7086',font:{size:9},callback:v=>v+'°'}, grid:{color:'#31324440'} }
+        }
+      }
+    });
+
+    // 7 günlük tahmin
+    const daysEl = document.getElementById('days');
+    for (let i=0; i<7; i++) {
+      const d    = new Date(daily.time[i]);
+      const name = i===0 ? 'Bug' : DAYS_TR[d.getDay()];
+      const dc   = document.createElement('div');
+      dc.className = 'day';
+      dc.innerHTML = `
+        <div class="day-name">${name}</div>
+        <div class="day-icon">${WMO_ICONS[daily.weathercode[i]]||'🌤'}</div>
+        <div class="day-hi">${Math.round(daily.temperature_2m_max[i])}°</div>
+        <div class="day-lo">${Math.round(daily.temperature_2m_min[i])}°</div>
+      `;
+      daysEl.appendChild(dc);
+    }
+  }
+
+  async function load(lat, lon, city) {
+    try {
+      const data = await fetchWeather(lat, lon);
+      render(data, city || 'İzmir');
+    } catch(e) {
+      document.getElementById('root').innerHTML =
+        `<div class="loading" style="color:#f38ba8">⚠ Hata: ${e.message}</div>`;
+    }
+  }
+
+  async function init() {
+    const windy = window.__windy__;
+
+    // Storage'dan son konumu kontrol et
+    let lat = DEFAULT_LAT, lon = DEFAULT_LON, city = 'İzmir';
+    if (windy) {
+      const saved = await windy.storage.get('weather_loc').catch(() => null);
+      if (saved) { lat = saved.lat; lon = saved.lon; city = saved.city; }
+    }
+
+    load(lat, lon, city);
+
+    // 30 dk'da bir güncelle
+    setInterval(() => load(lat, lon, city), 30 * 60 * 1000);
+  }
+
+  // __windy__ olmasa da çalış
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>

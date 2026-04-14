@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --base:     #1e1e2e;
+    --surface0: #313244;
+    --surface1: #45475a;
+    --overlay0: #6c7086;
+    --text:     #cdd6f4;
+    --sub1:     #bac2de;
+    --mauve:    #cba6f7;
+    --pink:     #f5c2e7;
+    --blue:     #89b4fa;
+    --lavender: #b4befe;
+    --green:    #a6e3a1;
+    --red:      #f38ba8;
+    --yellow:   #f9e2af;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    width: 320px; height: 420px;
+    background: transparent;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  .root {
+    width: 100%; height: 100%;
+    background: var(--base);
+    border: 1px solid var(--surface0);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Header: şarkı bilgisi */
+  .header {
+    padding: 14px 16px 10px;
+    background: linear-gradient(180deg, var(--surface0) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .album-art {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: var(--surface1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .album-art img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .song-info { flex: 1; min-width: 0; }
+
+  .song-title {
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .song-artist {
+    font-size: 11px; color: var(--sub1); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse-dot 2s ease infinite;
+  }
+
+  .status-dot.idle { background: var(--overlay0); box-shadow: none; animation: none; }
+
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; } 50% { opacity: .4; }
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    padding: 0 16px 6px;
+    flex-shrink: 0;
+  }
+
+  .progress-track {
+    height: 2px; background: var(--surface1); border-radius: 1px; overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%; background: var(--mauve); border-radius: 1px;
+    transition: width 1s linear;
+  }
+
+  /* Lyrics container */
+  .lyrics-wrap {
+    flex: 1; overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+
+  .lyrics-scroll {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lyric-line {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--overlay0);
+    line-height: 1.5;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.4s ease, font-size 0.3s ease, font-weight 0.3s ease;
+    cursor: default;
+    user-select: none;
+  }
+
+  .lyric-line.active {
+    color: var(--mauve);
+    font-size: 15px;
+    font-weight: 600;
+    background: rgba(203,166,247,0.08);
+    text-shadow: 0 0 20px rgba(203,166,247,0.4);
+  }
+
+  .lyric-line.past { color: var(--sub1); }
+
+  .lyric-line.next { color: var(--text); opacity: 0.7; }
+
+  /* No lyrics state */
+  .no-lyrics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
+    color: var(--overlay0);
+  }
+
+  .no-lyrics .icon { font-size: 32px; }
+  .no-lyrics .msg  { font-size: 12px; }
+
+  /* Footer: API credit */
+  .footer {
+    padding: 6px 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .footer-text { font-size: 9px; color: var(--overlay0); }
+  .footer-text span { color: var(--mauve); }
+
+  /* Loading spinner */
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid var(--surface1);
+    border-top-color: var(--mauve);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <div class="album-art" id="art">♪</div>
+    <div class="song-info">
+      <div class="song-title" id="title">Çalan bir şey yok</div>
+      <div class="song-artist" id="artist">Windy Lyrics Widget</div>
+    </div>
+    <div class="status-dot idle" id="dot"></div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="lyrics-wrap">
+    <div class="lyrics-scroll" id="scroll">
+      <div class="no-lyrics" id="no-lyrics">
+        <div class="icon">🎵</div>
+        <div class="msg">Şarkı çalmayı bekliyor…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-text">Powered by <span>LRCLib</span></span>
+    <div id="loading" style="display:none"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ─── State ──────────────────────────────────────────────────────────────
+  let currentTitle  = '';
+  let currentArtist = '';
+  let lyricsLines   = [];   // { time: secs, text: str }
+  let plainLyrics   = [];
+  let currentIdx    = -1;
+  let duration      = 0;
+
+  // ─── DOM refs ────────────────────────────────────────────────────────────
+  const $title    = document.getElementById('title');
+  const $artist   = document.getElementById('artist');
+  const $art      = document.getElementById('art');
+  const $dot      = document.getElementById('dot');
+  const $progress = document.getElementById('progress');
+  const $scroll   = document.getElementById('scroll');
+  const $nolyrics = document.getElementById('no-lyrics');
+  const $loading  = document.getElementById('loading');
+
+  // ─── LRCLib API ──────────────────────────────────────────────────────────
+  async function fetchLyrics(title, artist, album) {
+    $loading.style.display = 'block';
+    try {
+      const q = new URLSearchParams({ track_name: title, artist_name: artist });
+      if (album) q.set('album_name', album);
+      const url = `https://lrclib.net/api/get?${q}`;
+      const r   = await fetch(url);
+      if (!r.ok) return null;
+      const d = await r.json();
+      return d;
+    } catch { return null; }
+    finally { $loading.style.display = 'none'; }
+  }
+
+  function parseLRC(lrcText) {
+    if (!lrcText) return [];
+    const lines = [];
+    const re = /\[(\d{1,3}):(\d{2})(?:\.(\d{1,3}))?\](.*)/;
+    lrcText.split('\n').forEach(line => {
+      const m = line.match(re);
+      if (!m) return;
+      const mins = parseInt(m[1]);
+      const secs = parseInt(m[2]);
+      const ms   = m[3] ? parseInt(m[3].padEnd(3,'0')) : 0;
+      const time = mins * 60 + secs + ms / 1000;
+      const text = m[4].trim();
+      if (text) lines.push({ time, text });
+    });
+    return lines.sort((a,b) => a.time - b.time);
+  }
+
+  function renderLyrics() {
+    $scroll.innerHTML = '';
+    if (lyricsLines.length === 0 && plainLyrics.length === 0) {
+      $scroll.appendChild($nolyrics);
+      return;
+    }
+
+    const lines = lyricsLines.length > 0 ? lyricsLines : plainLyrics;
+    lines.forEach((l, i) => {
+      const div = document.createElement('div');
+      div.className = 'lyric-line';
+      div.textContent = l.text;
+      div.dataset.idx = i;
+      $scroll.appendChild(div);
+    });
+  }
+
+  function updateActiveLineAt(positionSecs) {
+    if (lyricsLines.length === 0) return;
+    let newIdx = -1;
+    for (let i = 0; i < lyricsLines.length; i++) {
+      if (lyricsLines[i].time <= positionSecs) newIdx = i;
+    }
+    if (newIdx === currentIdx) return;
+    currentIdx = newIdx;
+
+    const lines = $scroll.querySelectorAll('.lyric-line');
+    lines.forEach((el, i) => {
+      el.className = 'lyric-line';
+      if (i < currentIdx)     el.classList.add('past');
+      else if (i === currentIdx) el.classList.add('active');
+      else if (i <= currentIdx+3) el.classList.add('next');
+    });
+
+    // Scroll active line to center
+    const active = $scroll.querySelector('.lyric-line.active');
+    if (active) {
+      const wrapH = active.closest('.lyrics-wrap')?.clientHeight || 320;
+      const lineY = active.offsetTop;
+      const lineH = active.offsetHeight;
+      const offset = lineY - wrapH / 2 + lineH / 2;
+      $scroll.style.transform = `translateY(${-offset}px)`;
+    }
+  }
+
+  // ─── Windy API Integration ────────────────────────────────────────────────
+  function init() {
+    const windy = window.__windy__;
+    if (!windy) { setTimeout(init, 30); return; }
+
+    let prevTitle = '';
+
+    windy.data.subscribe('media', async (media) => {
+      // Progress bar
+      if (media.duration_secs > 0) {
+        const pct = (media.position_secs / media.duration_secs) * 100;
+        $progress.style.width = pct.toFixed(2) + '%';
+        duration = media.duration_secs;
+
+        // Senkronize lyric güncelle
+        updateActiveLineAt(media.position_secs);
+      }
+
+      // Şarkı değişti mi?
+      const newTitle = media.title || '';
+      if (newTitle === prevTitle) return;
+      prevTitle = newTitle;
+
+      $title.textContent  = newTitle  || 'Çalan bir şey yok';
+      $artist.textContent = media.artist || '—';
+      $dot.className      = 'status-dot' + (media.playing ? '' : ' idle');
+
+      if (!newTitle) {
+        lyricsLines = []; plainLyrics = [];
+        renderLyrics(); return;
+      }
+
+      // Yeni şarkı → LRCLib'den sözleri çek
+      lyricsLines = []; plainLyrics = []; currentIdx = -1;
+      $scroll.innerHTML = '<div class="no-lyrics"><div class="icon">⏳</div><div class="msg">Sözler aranıyor…</div></div>';
+      $scroll.style.transform = 'translateY(0)';
+
+      const data = await fetchLyrics(newTitle, media.artist, media.album);
+      if (data) {
+        if (data.syncedLyrics) {
+          lyricsLines = parseLRC(data.syncedLyrics);
+        } else if (data.plainLyrics) {
+          plainLyrics = data.plainLyrics.split('\n').filter(l => l.trim())
+            .map(t => ({ time: 0, text: t }));
+        }
+      }
+      renderLyrics();
+    });
+
+    // İlk yükleme — mevcut medyayı hemen işle
+    windy.data.get('media').then(m => {
+      if (m && m.title) {
+        // Direkt olarak media handler'ı çağır
+        prevTitle = ''; // reset so it processes
+        windy.data.subscribe('media', (ignored) => {}); // force one tick
+      }
+    }).catch(() => {});
+
+    // Manuel test için: widget sağ tıkla menüden manuel şarkı girebilir
+    window.__windyTestMedia = function(title, artist) {
+      prevTitle = '';
+      $title.textContent  = title;
+      $artist.textContent = artist;
+      fetchLyrics(title, artist, '').then(data => {
+        lyricsLines = []; plainLyrics = []; currentIdx = -1;
+        if (data) {
+          if (data.syncedLyrics) lyricsLines = parseLRC(data.syncedLyrics);
+          else if (data.plainLyrics) {
+            plainLyrics = data.plainLyrics.split('\n').filter(l=>l.trim()).map(t=>({time:0,text:t}));
+          }
+        }
+        renderLyrics();
+      });
+    };
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

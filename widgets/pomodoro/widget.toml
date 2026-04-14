@@ -1,0 +1,25 @@
+[widget]
+name        = "Catppuccin Pomodoro"
+version     = "1.0.0"
+author      = "windy"
+description = "Fully functional Pomodoro timer — statistics, notifications, storage"
+tags        = ["pomodoro", "productivity", "timer", "catppuccin", "pro"]
+
+[window]
+width              = 220
+height             = 260
+x                  = 700
+y                  = 400
+transparency       = true
+hide_on_fullscreen = false
+
+[theme]
+background    = "#1e1e2e"
+border        = "#313244"
+border_radius = 16
+
+[update]
+interval = 60000
+
+[data]
+sources = []

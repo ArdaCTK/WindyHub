@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap');
+  :root {
+    --base:#1e1e2e; --surface0:#313244; --surface1:#45475a;
+    --overlay0:#6c7086; --text:#cdd6f4; --sub1:#bac2de;
+    --mauve:#cba6f7; --blue:#89b4fa; --green:#a6e3a1;
+    --pink:#f5c2e7; --teal:#94e2d5; --yellow:#f9e2af; --peach:#fab387;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:360px;height:160px;background:transparent;font-family:'Inter',sans-serif;overflow:hidden;}
+  .root{width:100%;height:100%;background:var(--base);border:1px solid var(--surface0);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+  canvas{display:block;width:100%;height:100%;}
+
+  /* Overlay UI */
+  .overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px 14px;pointer-events:none;}
+  .top-row{display:flex;justify-content:space-between;align-items:flex-start;}
+  .song-info{}
+  .song-title{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;}
+  .song-artist{font-size:10px;color:var(--overlay0);margin-top:1px;}
+  .viz-label{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--overlay0);letter-spacing:1px;background:rgba(30,30,46,.6);padding:2px 6px;border-radius:4px;border:1px solid var(--surface0);}
+  .bottom-row{display:flex;justify-content:space-between;align-items:flex-end;}
+  .mode-dots{display:flex;gap:4px;pointer-events:all;}
+  .mdot{width:7px;height:7px;border-radius:50%;background:var(--surface1);cursor:pointer;transition:background .2s;}
+  .mdot.active{background:var(--mauve);}
+  .level{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--overlay0);}
+
+  /* No audio state */
+  .no-audio{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--overlay0);font-size:12px;background:var(--base);}
+  .no-audio .icon{font-size:28px;}
+  .start-btn{padding:6px 14px;border:1px solid var(--mauve);border-radius:6px;background:rgba(203,166,247,.1);color:var(--mauve);font-size:11px;cursor:pointer;pointer-events:all;transition:all .15s;}
+  .start-btn:hover{background:var(--mauve);color:var(--base);}
+</style>
+</head>
+<body>
+<div class="root">
+  <canvas id="canvas"></canvas>
+
+  <div class="overlay">
+    <div class="top-row">
+      <div class="song-info">
+        <div class="song-title" id="songTitle">Ses Görselleştirici</div>
+        <div class="song-artist" id="songArtist">Mikrofon veya sistem sesi</div>
+      </div>
+      <span class="viz-label">SPECTRUM</span>
+    </div>
+    <div class="bottom-row">
+      <div class="mode-dots" id="modeDots">
+        <div class="mdot active" onclick="setVizMode(0)" title="Bars"></div>
+        <div class="mdot"       onclick="setVizMode(1)" title="Waveform"></div>
+        <div class="mdot"       onclick="setVizMode(2)" title="Circle"></div>
+        <div class="mdot"       onclick="setVizMode(3)" title="Waterfall"></div>
+      </div>
+      <span class="level" id="levelDisplay">0 dB</span>
+    </div>
+  </div>
+
+  <div class="no-audio" id="noAudio">
+    <span class="icon">🎧</span>
+    <span>Ses kaynağına bağlanmak için tıklayın</span>
+    <button class="start-btn" onclick="startCapture()">Sesi Yakalamayı Başlat</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ─── Catppuccin renk paleti ───────────────────────────────────────────────
+  const COLORS = ['#cba6f7','#89b4fa','#a6e3a1','#f9e2af','#fab387','#f38ba8','#94e2d5','#f5c2e7'];
+
+  let audioCtx, analyser, source;
+  let animFrame;
+  let vizMode = 0;       // 0:bars 1:waveform 2:circle 3:waterfall
+  let fftSize = 1024;
+  let waterfallData = [];
+  let windy;
+
+  const canvas = document.getElementById('canvas');
+  const ctx    = canvas.getContext('2d');
+  const W = 360, H = 160;
+  canvas.width = W; canvas.height = H;
+
+  // ─── Audio capture ────────────────────────────────────────────────────────
+  window.startCapture = async function() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio:true, video:false });
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = fftSize;
+      analyser.smoothingTimeConstant = 0.85;
+      source = audioCtx.createMediaStreamSource(stream);
+      source.connect(analyser);
+      document.getElementById('noAudio').style.display = 'none';
+      draw();
+    } catch(e) {
+      // Mikrofon yoksa sistem sesini dene (sadece bazı tarayıcılar/OS)
+      try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({ audio:true, video:false });
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = fftSize;
+        analyser.smoothingTimeConstant = 0.8;
+        source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyser);
+        document.getElementById('noAudio').style.display = 'none';
+        draw();
+      } catch { console.warn('Audio capture failed', e); }
+    }
+  };
+
+  // Demo mode — ses yokken animasyon
+  function demoMode() {
+    let t = 0;
+    return () => {
+      const buf = new Uint8Array(fftSize/2);
+      for (let i=0; i<buf.length; i++) {
+        buf[i] = Math.max(0, 60 * Math.sin(i*0.08 + t*0.05) + 40 * Math.sin(i*0.02 + t*0.02) + Math.random()*20);
+      }
+      t++;
+      return buf;
+    };
+  }
+
+  const getDemo = demoMode();
+
+  // ─── Viz modes ────────────────────────────────────────────────────────────
+  function draw() {
+    animFrame = requestAnimationFrame(draw);
+
+    let dataArr;
+    if (analyser) {
+      dataArr = new Uint8Array(analyser.frequencyBinCount);
+      if (vizMode === 1) {
+        analyser.getByteTimeDomainData(dataArr);
+      } else {
+        analyser.getByteFrequencyData(dataArr);
+      }
+    } else {
+      dataArr = getDemo();
+    }
+
+    // Level display
+    const avg = dataArr.reduce((a,b) => a+b,0) / dataArr.length;
+    const db  = 20 * Math.log10(avg/255 + 0.001);
+    document.getElementById('levelDisplay').textContent = db.toFixed(1) + ' dB';
+
+    ctx.clearRect(0,0,W,H);
+
+    if      (vizMode === 0) drawBars(dataArr);
+    else if (vizMode === 1) drawWave(dataArr);
+    else if (vizMode === 2) drawCircle(dataArr);
+    else if (vizMode === 3) drawWaterfall(dataArr);
+  }
+
+  function drawBars(data) {
+    const len   = data.length;
+    const barsN = 64;
+    const step  = Math.floor(len / barsN);
+    const bW    = W / barsN - 1;
+
+    ctx.fillStyle = 'rgba(30,30,46,0.4)';
+    ctx.fillRect(0,0,W,H);
+
+    for (let i=0; i<barsN; i++) {
+      const val  = data[i*step] / 255;
+      const bH   = val * H * 0.85;
+      const x    = i * (bW+1);
+      const y    = H - bH;
+
+      // Gradient renk
+      const hue = (i/barsN) * 260 + 240; // mauve → teal
+      const grad = ctx.createLinearGradient(0, y, 0, H);
+      grad.addColorStop(0, COLORS[i % COLORS.length] + 'cc');
+      grad.addColorStop(1, COLORS[i % COLORS.length] + '33');
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(x, y, bW, bH, [2,2,0,0]);
+      ctx.fill();
+
+      // Peak line
+      ctx.fillStyle = COLORS[i % COLORS.length];
+      ctx.fillRect(x, y, bW, 1);
+    }
+  }
+
+  function drawWave(data) {
+    ctx.fillStyle = 'rgba(30,30,46,0.6)';
+    ctx.fillRect(0,0,W,H);
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#cba6f7';
+    ctx.lineWidth   = 2;
+    ctx.shadowBlur  = 8;
+    ctx.shadowColor = '#cba6f7';
+    const sliceW = W / data.length;
+    let x = 0;
+    for (let i=0; i<data.length; i++) {
+      const v = data[i]/128;
+      const y = v * H/2;
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      x += sliceW;
+    }
+    ctx.lineTo(W, H/2);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+
+  function drawCircle(data) {
+    ctx.fillStyle = 'rgba(30,30,46,0.5)';
+    ctx.fillRect(0,0,W,H);
+
+    const cx = W/2, cy = H/2;
+    const R  = Math.min(W,H)*0.28;
+    const barsN = 128;
+    const step  = Math.floor(data.length/barsN);
+
+    for (let i=0; i<barsN; i++) {
+      const val   = data[i*step]/255;
+      const angle = (i/barsN)*Math.PI*2 - Math.PI/2;
+      const rInner = R;
+      const rOuter = R + val * R * 0.8;
+      const col    = COLORS[Math.floor(i/barsN*COLORS.length)%COLORS.length];
+
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle)*rInner, cy + Math.sin(angle)*rInner);
+      ctx.lineTo(cx + Math.cos(angle)*rOuter, cy + Math.sin(angle)*rOuter);
+      ctx.strokeStyle = col + 'cc';
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+    }
+
+    // Center circle
+    ctx.beginPath();
+    ctx.arc(cx,cy,R*0.4,0,Math.PI*2);
+    ctx.fillStyle = 'rgba(30,30,46,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#313244';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function drawWaterfall(data) {
+    // Shift old data down
+    const imgData = ctx.getImageData(0,0,W,H-2);
+    ctx.putImageData(imgData,0,2);
+
+    // New line at top
+    const step = Math.floor(data.length/W);
+    for (let x=0; x<W; x++) {
+      const val = data[x*step]/255;
+      const r   = Math.round(val * 203);
+      const g   = Math.round(val * 166);
+      const b   = Math.round(255 - val*100);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(x,0,1,2);
+    }
+  }
+
+  // ─── Mode toggle ──────────────────────────────────────────────────────────
+  window.setVizMode = function(m) {
+    vizMode = m;
+    document.querySelectorAll('.mdot').forEach((d,i) => d.className = 'mdot' + (i===m?' active':''));
+    const labels = ['SPECTRUM','WAVEFORM','CIRCLE','WATERFALL'];
+    document.querySelector('.viz-label').textContent = labels[m];
+  };
+
+  // ─── Media info update ────────────────────────────────────────────────────
+  function init() {
+    windy = window.__windy__;
+
+    // Ses olmadan demo çiz
+    draw();
+
+    if (windy) {
+      windy.data.subscribe('media', media => {
+        document.getElementById('songTitle').textContent  = media?.title  || 'Ses Görselleştirici';
+        document.getElementById('songArtist').textContent = media?.artist || 'Mikrofon veya sistem sesi';
+      });
+      windy.data.get('media').then(m => {
+        if (m) {
+          document.getElementById('songTitle').textContent  = m.title  || 'Ses Görselleştirici';
+          document.getElementById('songArtist').textContent = m.artist || '';
+        }
+      }).catch(()=>{});
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>

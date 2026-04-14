@@ -1,0 +1,206 @@
+[widget]
+name        = "Catppuccin System"
+version     = "1.0.0"
+author      = "windy"
+description = "CPU, RAM, Disk and Network — Catppuccin Mocha theme"
+tags        = ["system", "cpu", "ram", "catppuccin"]
+
+[window]
+width              = 240
+height             = 310
+x                  = 60
+y                  = 500
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#1e1e2e90"
+border        = "#31324480"
+border_radius = 14
+accent        = "#cba6f7"
+font_family   = "Segoe UI"
+font_color    = "#cdd6f4"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["cpu", "ram", "disk", "network", "clock"]
+
+# ─── Header ────────────────────────────────────────────────────────────────
+[[components]]
+type           = "text"
+value          = "SYSTEM"
+x              = 16
+y              = 16
+font_size      = 9
+font_weight    = "700"
+color          = "#cba6f7"
+letter_spacing = 2
+
+[[components]]
+type      = "text"
+value     = "{{clock.time_seconds}}"
+x         = "right-16"
+y         = 16
+font_size = 9
+color     = "#6c708680"
+align     = "right"
+
+# ─── CPU ────────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "CPU"
+x         = 16
+y         = 42
+font_size = 10
+color     = "#bac2de80"
+
+[[components]]
+type      = "text"
+value     = "{{cpu.usage}}%"
+x         = "right-16"
+y         = 42
+font_size = 10
+color     = "#cba6f7"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{cpu.usage}}"
+x                = 16
+y                = 58
+width            = 208
+height           = 4
+color            = "#cba6f7"
+background_color = "#31324460"
+border_radius    = 2
+
+[[components]]
+type      = "text"
+value     = "{{cpu.freq_ghz}} GHz · {{cpu.cores}} core"
+x         = 16
+y         = 70
+font_size = 9
+color     = "#45475a"
+
+# ─── RAM ────────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "RAM"
+x         = 16
+y         = 95
+font_size = 10
+color     = "#bac2de80"
+
+[[components]]
+type      = "text"
+value     = "{{ram.used_gb}} / {{ram.total_gb}} GB"
+x         = "right-16"
+y         = 95
+font_size = 10
+color     = "#a6e3a1"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{ram.usage}}"
+x                = 16
+y                = 111
+width            = 208
+height           = 4
+color            = "#a6e3a1"
+background_color = "#31324460"
+border_radius    = 2
+
+# ─── DISK ───────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "DISK C:"
+x         = 16
+y         = 136
+font_size = 10
+color     = "#bac2de80"
+
+[[components]]
+type      = "text"
+value     = "{{disk.C.free_gb}} GB boş"
+x         = "right-16"
+y         = 136
+font_size = 10
+color     = "#89b4fa"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{disk.C.usage}}"
+x                = 16
+y                = 152
+width            = 208
+height           = 4
+color            = "#89b4fa"
+background_color = "#31324460"
+border_radius    = 2
+
+# ─── CPU Graph ──────────────────────────────────────────────────────────────
+[[components]]
+type             = "graph"
+id               = "cpu_g"
+value            = "{{cpu.usage}}"
+x                = 16
+y                = 174
+width            = 208
+height           = 52
+history          = 60
+color            = "#cba6f7"
+fill_color       = "#cba6f720"
+background_color = "#31324430"
+line_width       = 1
+
+# ─── NET ────────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "NET"
+x         = 16
+y         = 242
+font_size = 10
+color     = "#bac2de80"
+
+[[components]]
+type      = "text"
+value     = "↓ {{net.down_mb}} MB/s"
+x         = 70
+y         = 242
+font_size = 10
+color     = "#a6e3a1"
+
+[[components]]
+type      = "text"
+value     = "↑ {{net.up_mb}} MB/s"
+x         = "right-16"
+y         = 242
+font_size = 10
+color     = "#f9e2af"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{net.down_mb}}"
+min              = 0
+max              = 100
+x                = 16
+y                = 258
+width            = 208
+height           = 3
+color            = "#a6e3a150"
+background_color = "#31324430"
+border_radius    = 2
+
+# ─── Footer ─────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "{{sys.hostname}} · {{sys.uptime}}"
+x         = 16
+y         = 284
+font_size = 9
+color     = "#45475a"

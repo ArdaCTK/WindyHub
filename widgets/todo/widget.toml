@@ -1,0 +1,25 @@
+[widget]
+name        = "Catppuccin Todo"
+version     = "1.0.0"
+author      = "windy"
+description = "Full featured todo list — priority, filters, persistent storage, drag-reorder"
+tags        = ["todo", "productivity", "catppuccin", "pro", "impossible"]
+
+[window]
+width              = 280
+height             = 380
+x                  = 1000
+y                  = 60
+transparency       = true
+hide_on_fullscreen = false
+
+[theme]
+background    = "#1e1e2e"
+border        = "#313244"
+border_radius = 16
+
+[update]
+interval = 60000
+
+[data]
+sources = ["clock"]

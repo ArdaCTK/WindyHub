@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --base:     #1e1e2e; --surface0: #313244; --surface1: #45475a;
+    --overlay0: #6c7086; --text:     #cdd6f4; --sub1:     #bac2de;
+    --mauve:    #cba6f7; --pink:     #f5c2e7; --blue:     #89b4fa;
+    --lavender: #b4befe; --green:    #a6e3a1; --red:      #f38ba8;
+    --yellow:   #f9e2af; --peach:    #fab387; --teal:     #94e2d5;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    width:280px; height:360px;
+    background:transparent;
+    font-family:'Inter','Segoe UI',sans-serif;
+    color:var(--text);
+    overflow:hidden;
+  }
+
+  .root {
+    width:100%; height:100%;
+    background:var(--base);
+    border:1px solid var(--surface0);
+    border-radius:16px;
+    display:flex; flex-direction:column;
+  }
+
+  .header {
+    padding:14px 16px 10px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--surface0);
+    flex-shrink:0;
+  }
+
+  .header-left { display:flex; align-items:center; gap:8px; }
+
+  .header-icon { font-size:16px; }
+
+  .header-title {
+    font-size:13px; font-weight:600;
+    color:var(--mauve);
+    letter-spacing:0.5px;
+  }
+
+  .header-time {
+    font-size:11px; color:var(--overlay0);
+    font-variant-numeric:tabular-nums;
+  }
+
+  .edit-btn {
+    background:none; border:1px solid var(--surface1);
+    border-radius:5px; color:var(--overlay0);
+    padding:3px 7px; font-size:10px;
+    cursor:pointer; transition:all .15s;
+  }
+
+  .edit-btn:hover { color:var(--mauve); border-color:var(--mauve); }
+  .edit-btn.active { color:var(--mauve); border-color:var(--mauve); background:rgba(203,166,247,.1); }
+
+  /* Groups */
+  .group-label {
+    font-size:9px; font-weight:600;
+    text-transform:uppercase; letter-spacing:1px;
+    color:var(--overlay0);
+    padding:8px 16px 4px;
+  }
+
+  /* Items */
+  .items {
+    flex:1; overflow-y:auto;
+    padding:0 10px 10px;
+  }
+
+  .items::-webkit-scrollbar { width:3px; }
+  .items::-webkit-scrollbar-thumb { background:var(--surface1); border-radius:2px; }
+
+  .item {
+    display:flex; align-items:center; gap:10px;
+    padding:9px 8px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .15s;
+    position:relative;
+  }
+
+  .item:hover { background:var(--surface0); }
+
+  .item-icon {
+    width:32px; height:32px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; flex-shrink:0;
+    transition:transform .15s;
+  }
+
+  .item:hover .item-icon { transform:scale(1.1); }
+
+  .item-info { flex:1; min-width:0; }
+
+  .item-name {
+    font-size:12px; font-weight:500;
+    color:var(--text); white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis;
+  }
+
+  .item-url {
+    font-size:10px; color:var(--overlay0);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    margin-top:1px;
+  }
+
+  .item-del {
+    background:none; border:none;
+    color:var(--red); font-size:14px;
+    cursor:pointer; opacity:0;
+    transition:opacity .15s;
+    padding:2px 4px;
+    border-radius:4px;
+  }
+
+  .edit-mode .item-del { opacity:0.6; }
+  .edit-mode .item-del:hover { opacity:1; }
+
+  .item-badge {
+    font-size:9px; padding:1px 5px;
+    border-radius:20px; flex-shrink:0;
+  }
+
+  .badge-app  { background:rgba(166,227,161,.15); color:var(--green); }
+  .badge-site { background:rgba(137,180,250,.15); color:var(--blue); }
+
+  /* Add item form */
+  .add-form {
+    padding:8px 12px;
+    background:var(--surface0);
+    border-top:1px solid var(--surface1);
+    display:none;
+    gap:6px;
+    flex-direction:column;
+  }
+
+  .add-form.show { display:flex; }
+
+  .add-form input {
+    background:var(--base); border:1px solid var(--surface1);
+    border-radius:5px; padding:5px 9px;
+    color:var(--text); font-size:11px; font-family:inherit;
+    outline:none; width:100%;
+  }
+
+  .add-form input:focus { border-color:var(--mauve); }
+  .add-form input::placeholder { color:var(--overlay0); }
+
+  .add-form .form-row { display:flex; gap:5px; }
+
+  .add-form select {
+    background:var(--base); border:1px solid var(--surface1);
+    border-radius:5px; padding:5px 8px;
+    color:var(--text); font-size:11px; outline:none;
+  }
+
+  .btn-add-confirm {
+    flex:1; padding:5px; background:var(--mauve);
+    border:none; border-radius:5px;
+    color:var(--base); font-size:11px; font-weight:600;
+    cursor:pointer; transition:opacity .15s;
+  }
+
+  .btn-add-confirm:hover { opacity:.85; }
+
+  .drag-handle {
+    color:var(--overlay0); font-size:12px;
+    cursor:grab; padding:0 4px;
+    display:none;
+  }
+
+  .edit-mode .drag-handle { display:block; }
+
+  .item.dragging { opacity:0.4; }
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <div class="header-left">
+      <span class="header-icon">⚡</span>
+      <span class="header-title">Launcher</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="header-time" id="clock">--:--</span>
+      <button class="edit-btn" id="editBtn" onclick="toggleEdit()">✎ Düzenle</button>
+    </div>
+  </div>
+
+  <div class="items" id="itemList"></div>
+
+  <div class="add-form" id="addForm">
+    <input id="fName"  placeholder="İsim (ör: GitHub)" />
+    <input id="fUrl"   placeholder="URL veya uygulama yolu (ör: https://github.com)" />
+    <div class="form-row">
+      <input id="fIcon"  placeholder="Emoji ikon 🚀" style="width:80px;" />
+      <select id="fType">
+        <option value="site">🌐 Site</option>
+        <option value="app">💻 Uygulama</option>
+      </select>
+      <select id="fColor">
+        <option value="#cba6f7">Mauve</option>
+        <option value="#89b4fa">Blue</option>
+        <option value="#a6e3a1">Green</option>
+        <option value="#f9e2af">Yellow</option>
+        <option value="#fab387">Peach</option>
+        <option value="#f38ba8">Red</option>
+        <option value="#94e2d5">Teal</option>
+      </select>
+    </div>
+    <button class="btn-add-confirm" onclick="addItem()">+ Ekle</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ─── Default items ────────────────────────────────────────────────────────
+  const DEFAULTS = [
+    { name:'GitHub',    url:'https://github.com',    icon:'🐙', type:'site', color:'#cba6f7' },
+    { name:'YouTube',   url:'https://youtube.com',   icon:'▶️',  type:'site', color:'#f38ba8' },
+    { name:'Spotify',   url:'spotify:',              icon:'🎵', type:'app',  color:'#a6e3a1' },
+    { name:'VS Code',   url:'code',                  icon:'💻', type:'app',  color:'#89b4fa' },
+    { name:'Discord',   url:'discord:',              icon:'💬', type:'app',  color:'#b4befe' },
+    { name:'Notion',    url:'https://notion.so',     icon:'📝', type:'site', color:'#f9e2af' },
+    { name:'ChatGPT',   url:'https://chat.openai.com',icon:'🤖',type:'site', color:'#94e2d5' },
+    { name:'Görev Ynt.',url:'taskmgr.exe',           icon:'📊', type:'app',  color:'#fab387' },
+  ];
+
+  let items = [];
+  let editMode = false;
+  let windy;
+
+  // ─── Storage ──────────────────────────────────────────────────────────────
+  async function load() {
+    if (!windy) return;
+    const v = await windy.storage.get('launcher_items').catch(() => null);
+    items = v || DEFAULTS;
+    render();
+  }
+
+  async function save() {
+    if (!windy) return;
+    await windy.storage.set('launcher_items', items).catch(() => {});
+  }
+
+  // ─── Render ───────────────────────────────────────────────────────────────
+  function render() {
+    const list = document.getElementById('itemList');
+    list.innerHTML = '';
+
+    // Grup: Apps
+    const apps  = items.filter(i => i.type === 'app');
+    const sites = items.filter(i => i.type === 'site');
+
+    if (apps.length > 0) {
+      const g = document.createElement('div');
+      g.className = 'group-label'; g.textContent = 'Uygulamalar';
+      list.appendChild(g);
+      apps.forEach((item, i) => list.appendChild(makeItem(item, items.indexOf(item))));
+    }
+
+    if (sites.length > 0) {
+      const g = document.createElement('div');
+      g.className = 'group-label'; g.textContent = 'Siteler';
+      list.appendChild(g);
+      sites.forEach(item => list.appendChild(makeItem(item, items.indexOf(item))));
+    }
+
+    // Edit mode class
+    list.className = 'items' + (editMode ? ' edit-mode' : '');
+  }
+
+  function makeItem(item, idx) {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.dataset.idx = idx;
+    div.draggable = editMode;
+
+    div.innerHTML = `
+      <span class="drag-handle" data-no-drag>⋮⋮</span>
+      <div class="item-icon" style="background:${item.color}22;">${item.icon}</div>
+      <div class="item-info">
+        <div class="item-name">${item.name}</div>
+        <div class="item-url">${item.url}</div>
+      </div>
+      <span class="item-badge ${item.type==='app'?'badge-app':'badge-site'}">${item.type==='app'?'App':'Web'}</span>
+      <button class="item-del" data-no-drag onclick="removeItem(${idx});event.stopPropagation();">✕</button>
+    `;
+
+    div.addEventListener('click', () => {
+      if (editMode) return;
+      launch(item);
+    });
+
+    // Drag reorder
+    div.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', idx);
+      div.classList.add('dragging');
+    });
+    div.addEventListener('dragend', () => div.classList.remove('dragging'));
+    div.addEventListener('dragover', e => e.preventDefault());
+    div.addEventListener('drop', e => {
+      const from = parseInt(e.dataTransfer.getData('text/plain'));
+      const to   = idx;
+      if (from === to) return;
+      const moved = items.splice(from, 1)[0];
+      items.splice(to, 0, moved);
+      save(); render();
+    });
+
+    return div;
+  }
+
+  // ─── Launch ───────────────────────────────────────────────────────────────
+  async function launch(item) {
+    if (!windy) return;
+    if (item.type === 'site') {
+      windy.system.openUrl(item.url);
+    } else {
+      windy.system.exec(item.url, []).catch(() => {
+        windy.system.openUrl(item.url);
+      });
+    }
+  }
+
+  // ─── Edit mode ────────────────────────────────────────────────────────────
+  window.toggleEdit = function() {
+    editMode = !editMode;
+    const btn  = document.getElementById('editBtn');
+    const form = document.getElementById('addForm');
+    btn.textContent = editMode ? '✓ Bitti' : '✎ Düzenle';
+    btn.className   = 'edit-btn' + (editMode ? ' active' : '');
+    form.className  = 'add-form' + (editMode ? ' show' : '');
+    render();
+  };
+
+  window.removeItem = function(idx) {
+    items.splice(idx, 1);
+    save(); render();
+  };
+
+  window.addItem = function() {
+    const name  = document.getElementById('fName').value.trim();
+    const url   = document.getElementById('fUrl').value.trim();
+    const icon  = document.getElementById('fIcon').value.trim() || '🔗';
+    const type  = document.getElementById('fType').value;
+    const color = document.getElementById('fColor').value;
+    if (!name || !url) return;
+    items.push({ name, url, icon, type, color });
+    save(); render();
+    ['fName','fUrl','fIcon'].forEach(id => document.getElementById(id).value = '');
+  };
+
+  // ─── Clock update ─────────────────────────────────────────────────────────
+  function updateClock(clock) {
+    document.getElementById('clock').textContent = clock?.time || '--:--';
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  function init() {
+    windy = window.__windy__;
+    if (!windy) { setTimeout(init, 30); return; }
+
+    load();
+    windy.data.subscribe('clock', updateClock);
+    windy.data.get('clock').then(updateClock).catch(() => {});
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
