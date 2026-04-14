@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updated_at": "2026-04-14T00:00:00Z",
+  "updated_at": "2026-04-14T20:48:00Z",
   "base_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
   "widgets": [
     {
@@ -21,6 +21,88 @@
       "download_count": 0,
       "rating": 5.0,
       "rating_count": 1,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-battery",
+      "name": "Battery",
+      "slug": "windy-battery",
+      "author": "windy",
+      "description": "Battery level and charging status",
+      "version": "1.0.0",
+      "tags": [
+        "battery",
+        "power",
+        "minimal"
+      ],
+      "category": "battery",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-date",
+      "name": "Date",
+      "slug": "windy-date",
+      "author": "windy",
+      "description": "Minimal widget showing date, day and week information",
+      "version": "1.0.0",
+      "tags": [
+        "clock",
+        "date",
+        "minimal"
+      ],
+      "category": "date",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-network",
+      "name": "Network Monitor",
+      "slug": "windy-network",
+      "author": "windy",
+      "description": "Network speed and traffic tracking — Pro mode example",
+      "version": "1.0.0",
+      "tags": [
+        "network",
+        "pro",
+        "graph"
+      ],
+      "category": "network",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-system",
+      "name": "System Monitor",
+      "slug": "windy-system",
+      "author": "windy",
+      "description": "System monitor showing CPU, RAM and disk usage",
+      "version": "1.0.0",
+      "tags": [
+        "system",
+        "cpu",
+        "ram",
+        "disk",
+        "monitor"
+      ],
+      "category": "system",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
       "windy_version_min": "0.1.0"
     }
   ]
