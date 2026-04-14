@@ -3,6 +3,7 @@ name        = "Windy Clock"
 version     = "1.0.0"
 author      = "windy"
 description = "Analog + digital clock and date widget"
+preview     = "preview.png"
 tags        = ["clock", "time", "minimal"]
 
 [window]

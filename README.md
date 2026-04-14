@@ -27,14 +27,57 @@ windy-hub/
 
 ## Creating Widget.zip
 
+### Required Files
+
+**widget.zip must contain:**
+- `widget.toml` — Required. Widget configuration file
+- `index.html` — Required for Pro mode widgets only. Simple mode widgets don't need this
+
+### Optional Files
+
+- `preview.png` — Optional. Preview image shown in Widgets section (recommended: 512x320px)
+- Asset files — Images, icons, fonts, CSS, JS files referenced by index.html
+
+### Widget.zip Structure
+
+```
+widget.zip
+├── widget.toml           ← Required (all widgets)
+├── index.html            ← Required (Pro mode only)
+├── preview.png           ← Optional (Widgets preview)
+├── assets/               ← Optional (Pro mode assets)
+│   ├── icon.png
+│   └── style.css
+└── ...
+```
+
+### Creating the zip
+
+**Important:** Zip the contents inside the widget folder, NOT the folder itself.
+
 ```bash
 # Windows PowerShell
 cd widgets/my-widget
 Compress-Archive -Path * -DestinationPath widget.zip
 
 # or with 7-Zip
-7z a widget.zip ./my-widget/*
+7z a widget.zip ./*
+
+# or with standard zip
+zip -r widget.zip *
 ```
+
+### Mode Differences
+
+**Simple Mode:**
+- Only `widget.toml` required
+- Windy renders HTML automatically from toml configuration
+- No `index.html` needed
+
+**Pro Mode:**
+- `widget.toml` + `index.html` required
+- Full HTML/CSS/JS control
+- Can include external assets
 
 ## Registry.json Format
 
