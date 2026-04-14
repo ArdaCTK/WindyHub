@@ -1,0 +1,79 @@
+[widget]
+name        = "Windy Clock"
+version     = "1.0.0"
+author      = "windy"
+description = "Analog + digital clock and date widget"
+tags        = ["clock", "time", "minimal"]
+
+[window]
+width              = 180
+height             = 210
+x                  = 40
+y                  = 40
+anchor             = "top-left"
+transparency       = true
+click_through      = false
+hide_on_fullscreen = true
+
+[theme]
+background    = "#12121890"
+border        = "#ffffff12"
+border_radius = 16
+accent        = "#7c6fcd"
+font_family   = "Segoe UI"
+font_color    = "#ffffffd0"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["clock"]
+language = "en"
+
+[[components]]
+type   = "shape"
+shape  = "rectangle"
+x      = 0
+y      = 0
+width  = 180
+height = 210
+color  = "transparent"
+
+[[components]]
+type         = "clock"
+x            = 30
+y            = 16
+size         = 120
+color        = "#ffffff25"
+face_color   = "#ffffff08"
+hand_color   = "#ffffffc0"
+show_seconds = true
+
+[[components]]
+type        = "text"
+value       = "{{clock.time}}"
+x           = 90
+y           = 152
+font_size   = 22
+font_weight = "300"
+color       = "#ffffffdd"
+align       = "center"
+
+[[components]]
+type      = "text"
+value     = "{{clock.day_en}}"
+x         = 90
+y         = 182
+font_size = 11
+color     = "#ffffff55"
+align     = "center"
+letter_spacing = 1
+
+[[components]]
+type      = "text"
+value     = "{{clock.date_short}}"
+x         = 90
+y         = 197
+font_size = 10
+color     = "#ffffff35"
+align     = "center"
