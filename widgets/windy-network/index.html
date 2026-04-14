@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    width: 240px; height: 170px;
+    background: transparent;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffffcc;
+    overflow: hidden;
+  }
+  .root {
+    width: 100%; height: 100%;
+    background: #0d111790;
+    border: 1px solid #ffffff10;
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #e0b852;
+    text-transform: uppercase;
+  }
+  .ping {
+    font-size: 10px;
+    color: #ffffff40;
+    font-variant-numeric: tabular-nums;
+  }
+  .speeds {
+    display: flex;
+    gap: 12px;
+  }
+  .speed-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .speed-label {
+    font-size: 9px;
+    color: #ffffff40;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .arrow { font-size: 11px; font-weight: 700; }
+  .arrow.down { color: #52e07c; }
+  .arrow.up   { color: #e0b852; }
+  .speed-val {
+    font-size: 18px;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .speed-unit { font-size: 11px; color: #ffffff50; }
+  .graph-area {
+    flex: 1;
+    position: relative;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .totals {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #ffffff30;
+  }
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <span class="title">Network</span>
+    <span class="ping" id="ping">— ms</span>
+  </div>
+
+  <div class="speeds">
+    <div class="speed-item">
+      <span class="speed-label"><span class="arrow down">↓</span> İndirme</span>
+      <div>
+        <span class="speed-val" id="down-val">0.00</span>
+        <span class="speed-unit" id="down-unit">MB/s</span>
+      </div>
+    </div>
+    <div class="speed-item">
+      <span class="speed-label"><span class="arrow up">↑</span> Yükleme</span>
+      <div>
+        <span class="speed-val" id="up-val">0.00</span>
+        <span class="speed-unit" id="up-unit">MB/s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="graph-area">
+    <canvas id="graph"></canvas>
+  </div>
+
+  <div class="totals">
+    <span>↓ <span id="total-down">0</span> MB toplam</span>
+    <span>↑ <span id="total-up">0</span> MB toplam</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const windy = window.__windy__;
+  if (!windy) return;
+
+  const canvas = document.getElementById('graph');
+  const downHistory = [];
+  const upHistory   = [];
+  const HIST = 50;
+
+  function formatSpeed(mb) {
+    if (mb >= 1) return [mb.toFixed(2), 'MB/s'];
+    return [(mb * 1024).toFixed(1), 'KB/s'];
+  }
+
+  function drawGraph() {
+    const w = canvas.parentElement.clientWidth;
+    const h = canvas.parentElement.clientHeight;
+    canvas.width  = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, w, h);
+
+    const maxVal = Math.max(...downHistory, ...upHistory, 0.01);
+
+    function drawLine(history, color, fillColor) {
+      if (history.length < 2) return;
+      ctx.beginPath();
+      history.forEach((v, i) => {
+        const x = (i / (HIST - 1)) * w;
+        const y = h - (v / maxVal) * h * 0.9;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.lineJoin  = 'round';
+      ctx.stroke();
+
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
+
+    drawLine(downHistory, '#52e07c', '#52e07c22');
+    drawLine(upHistory,   '#e0b852', '#e0b85222');
+  }
+
+  windy.data.subscribe('network', (net) => {
+    downHistory.push(net.down_mb);
+    upHistory.push(net.up_mb);
+    if (downHistory.length > HIST) downHistory.shift();
+    if (upHistory.length > HIST)   upHistory.shift();
+
+    const [dv, du] = formatSpeed(net.down_mb);
+    const [uv, uu] = formatSpeed(net.up_mb);
+
+    document.getElementById('down-val').textContent  = dv;
+    document.getElementById('down-unit').textContent = du;
+    document.getElementById('up-val').textContent    = uv;
+    document.getElementById('up-unit').textContent   = uu;
+
+    document.getElementById('total-down').textContent =
+      (net.total_down / 1048576).toFixed(0);
+    document.getElementById('total-up').textContent =
+      (net.total_up / 1048576).toFixed(0);
+
+    drawGraph();
+  });
+})();
+</script>
+</body>
+</html>

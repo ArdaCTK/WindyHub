@@ -1,0 +1,175 @@
+[widget]
+name        = "System Monitor"
+version     = "1.0.0"
+author      = "windy"
+description = "System monitor showing CPU, RAM and disk usage"
+tags        = ["system", "cpu", "ram", "disk", "monitor"]
+
+[window]
+width              = 230
+height             = 280
+x                  = 40
+y                  = 280
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0f0f1490"
+border        = "#ffffff10"
+border_radius = 14
+accent        = "#7c6fcd"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["cpu", "ram", "disk"]
+
+# ─── Header ────────────────────────────────────────────────────────────
+[[components]]
+type           = "text"
+value          = "SYSTEM"
+x              = 16
+y              = 16
+font_size      = 9
+font_weight    = "700"
+color          = "#7c6fcd"
+letter_spacing = 2
+
+[[components]]
+type      = "text"
+value     = "{{cpu.name}}"
+x         = 16
+y         = 32
+font_size = 9
+color     = "#ffffff35"
+
+# ─── CPU ────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "CPU"
+x         = 16
+y         = 58
+font_size = 10
+color     = "#ffffff60"
+
+[[components]]
+type      = "text"
+value     = "{{cpu.usage}}%"
+x         = "right-16"
+y         = 58
+font_size = 10
+color     = "#ffffffcc"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{cpu.usage}}"
+x                = 16
+y                = 74
+width            = 198
+height           = 4
+color            = "#7c6fcd"
+background_color = "#ffffff12"
+border_radius    = 2
+
+[[components]]
+type      = "text"
+value     = "{{cpu.freq_ghz}} GHz · {{cpu.cores}} cores"
+x         = 16
+y         = 86
+font_size = 9
+color     = "#ffffff35"
+
+# ─── RAM ────────────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "RAM"
+x         = 16
+y         = 112
+font_size = 10
+color     = "#ffffff60"
+
+[[components]]
+type      = "text"
+value     = "{{ram.used_gb}} / {{ram.total_gb}} GB"
+x         = "right-16"
+y         = 112
+font_size = 10
+color     = "#ffffffcc"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{ram.usage}}"
+x                = 16
+y                = 128
+width            = 198
+height           = 4
+color            = "#52e07c"
+background_color = "#ffffff12"
+border_radius    = 2
+
+[[components]]
+type      = "text"
+value     = "{{ram.usage}}% in use"
+x         = 16
+y         = 140
+font_size = 9
+color     = "#ffffff35"
+
+# ─── CPU Graph ──────────────────────────────────────────────────────────
+[[components]]
+type             = "graph"
+id               = "cpu_graph"
+value            = "{{cpu.usage}}"
+x                = 16
+y                = 164
+width            = 198
+height           = 50
+history          = 60
+color            = "#7c6fcd"
+fill_color       = "#7c6fcd22"
+background_color = "#ffffff06"
+line_width       = 1
+
+# ─── Disk (C:) ──────────────────────────────────────────────────────────
+[[components]]
+type      = "text"
+value     = "DISK  C:"
+x         = 16
+y         = 232
+font_size = 9
+color     = "#ffffff60"
+letter_spacing = 1
+
+[[components]]
+type      = "text"
+value     = "{{disk.C.free_gb}} GB free"
+x         = "right-16"
+y         = 232
+font_size = 9
+color     = "#ffffff50"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{disk.C.usage}}"
+x                = 16
+y                = 248
+width            = 198
+height           = 3
+color            = "#e0b852"
+background_color = "#ffffff12"
+border_radius    = 2
+
+[[components]]
+type      = "text"
+value     = "{{clock.time}}"
+x         = "right-16"
+y         = 264
+font_size = 9
+color     = "#ffffff25"
+align     = "right"

@@ -1,0 +1,75 @@
+[widget]
+name        = "Battery"
+version     = "1.0.0"
+author      = "windy"
+description = "Battery level and charging status"
+tags        = ["battery", "power", "minimal"]
+
+[window]
+width              = 160
+height             = 70
+x                  = 40
+y                  = 800
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0f0f1490"
+border        = "#ffffff10"
+border_radius = 12
+accent        = "#52b5e0"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 5000
+
+[data]
+sources = ["battery"]
+
+[[components]]
+type      = "text"
+value     = "BATTERY"
+x         = 14
+y         = 14
+font_size = 9
+font_weight = "700"
+color     = "#52b5e0"
+letter_spacing = 1
+
+[[components]]
+type      = "text"
+value     = "{{battery.level}}%"
+x         = "right-14"
+y         = 14
+font_size = 10
+color     = "#ffffffcc"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{battery.level}}"
+x                = 14
+y                = 32
+width            = 132
+height           = 8
+color            = "#52b5e0"
+background_color = "#ffffff12"
+border_radius    = 4
+
+[[components]]
+type      = "text"
+value     = "{{battery.time_left}}"
+x         = 14
+y         = 52
+font_size = 10
+color     = "#ffffff50"
+
+[[components]]
+type      = "text"
+value     = "charging"
+x         = "right-14"
+y         = 52
+font_size = 9
+color     = "#52e07c"
+align     = "right"

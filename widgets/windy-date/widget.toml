@@ -1,0 +1,70 @@
+[widget]
+name        = "Date"
+version     = "1.0.0"
+author      = "windy"
+description = "Minimal widget showing date, day and week information"
+tags        = ["clock", "date", "minimal"]
+
+[window]
+width              = 200
+height             = 90
+x                  = 40
+y                  = 900
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0f0f1490"
+border        = "#ffffff08"
+border_radius = 14
+accent        = "#7c6fcd"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 60000
+
+[data]
+sources = ["clock"]
+language = "en"
+
+[[components]]
+type        = "text"
+value       = "{{clock.day_en}}"
+x           = 18
+y           = 16
+font_size   = 11
+font_weight = "600"
+color       = "#7c6fcd"
+letter_spacing = 1
+
+[[components]]
+type      = "text"
+value     = "{{clock.date_en}}"
+x         = 18
+y         = 36
+font_size = 22
+font_weight = "300"
+color     = "#ffffffdd"
+
+[[components]]
+type      = "text"
+value     = "{{clock.year}}"
+x         = "right-18"
+y         = 60
+font_size = 11
+color     = "#ffffff20"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{clock.hour}}"
+min              = 0
+max              = 24
+x                = 18
+y                = 70
+width            = 164
+height           = 2
+color            = "#7c6fcd55"
+background_color = "#ffffff08"
+border_radius    = 1

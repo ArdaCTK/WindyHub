@@ -1,0 +1,25 @@
+[widget]
+name        = "Network Monitor"
+version     = "1.0.0"
+author      = "windy"
+description = "Network speed and traffic tracking — Pro mode example"
+tags        = ["network", "pro", "graph"]
+
+[window]
+width              = 240
+height             = 170
+x                  = 40
+y                  = 600
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0d1117a0"
+border        = "#ffffff10"
+border_radius = 14
+
+[update]
+interval = 1000
+
+[data]
+sources = ["network"]
