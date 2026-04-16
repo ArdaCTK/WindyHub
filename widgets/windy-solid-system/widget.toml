@@ -1,0 +1,85 @@
+[widget]
+name        = "Solid System Tile"
+version     = "1.0.0"
+author      = "windy"
+description = "Opaque CPU and RAM status tile"
+tags        = ["system", "cpu", "ram", "solid"]
+
+[window]
+width              = 240
+height             = 145
+x                  = 260
+y                  = 220
+transparency       = false
+hide_on_fullscreen = true
+
+[theme]
+background    = "#101722"
+border        = "#253044"
+border_radius = 12
+accent        = "#52e07c"
+font_family   = "Segoe UI"
+font_color    = "#f0f4ff"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["cpu", "ram", "clock"]
+
+[[components]]
+type = "text"
+value = "SYSTEM"
+x = 14
+y = 12
+font_size = 10
+font_weight = "700"
+color = "#8ec9ff"
+letter_spacing = 2
+
+[[components]]
+type = "text"
+value = "CPU {{cpu.usage}}%"
+x = 14
+y = 36
+font_size = 12
+color = "#f0f4ff"
+
+[[components]]
+type = "bar"
+value = "{{cpu.usage}}"
+x = 14
+y = 54
+width = 210
+height = 5
+color = "#7c6fcd"
+background_color = "#ffffff18"
+border_radius = 3
+
+[[components]]
+type = "text"
+value = "RAM {{ram.usage}}%"
+x = 14
+y = 76
+font_size = 12
+color = "#f0f4ff"
+
+[[components]]
+type = "bar"
+value = "{{ram.usage}}"
+x = 14
+y = 94
+width = 210
+height = 5
+color = "#52e07c"
+background_color = "#ffffff18"
+border_radius = 3
+
+[[components]]
+type = "text"
+value = "{{clock.time}}"
+x = "right-14"
+y = 118
+font_size = 11
+color = "#b8c0dd"
+align = "right"

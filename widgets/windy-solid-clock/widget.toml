@@ -1,0 +1,55 @@
+[widget]
+name        = "Solid Clock"
+version     = "1.0.0"
+author      = "windy"
+description = "Opaque desktop clock card"
+tags        = ["clock", "solid", "minimal"]
+
+[window]
+width              = 210
+height             = 110
+x                  = 220
+y                  = 140
+transparency       = false
+hide_on_fullscreen = true
+
+[theme]
+background    = "#121624"
+border        = "#2a3555"
+border_radius = 12
+accent        = "#7c6fcd"
+font_family   = "Segoe UI"
+font_color    = "#f5f7ff"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["clock"]
+
+[[components]]
+type = "text"
+value = "CLOCK"
+x = 14
+y = 14
+font_size = 10
+font_weight = "700"
+color = "#8fa2ff"
+letter_spacing = 2
+
+[[components]]
+type = "text"
+value = "{{clock.time}}"
+x = 14
+y = 38
+font_size = 30
+font_weight = "700"
+color = "#f5f7ff"
+
+[[components]]
+type = "text"
+value = "{{clock.day}} · {{clock.date_short}}"
+x = 14
+y = 78
+font_size = 11
+color = "#b8c0dd"

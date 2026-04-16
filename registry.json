@@ -164,6 +164,47 @@
       "rating": 0.0,
       "rating_count": 0,
       "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-solid-clock",
+      "name": "Solid Clock",
+      "slug": "windy-solid-clock",
+      "author": "windy",
+      "description": "Opaque desktop clock card",
+      "version": "1.0.0",
+      "tags": [
+        "clock",
+        "solid",
+        "minimal"
+      ],
+      "category": "clock",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-solid-system",
+      "name": "Solid System Tile",
+      "slug": "windy-solid-system",
+      "author": "windy",
+      "description": "Opaque CPU and RAM status tile",
+      "version": "1.0.0",
+      "tags": [
+        "system",
+        "cpu",
+        "ram",
+        "solid"
+      ],
+      "category": "system",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
     }
   ]
 }
