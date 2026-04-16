@@ -1,0 +1,89 @@
+[widget]
+name        = "CPU Pulse"
+version     = "1.0.0"
+author      = "windy"
+description = "Focused CPU usage widget with live graph"
+tags        = ["cpu", "system", "graph"]
+
+[window]
+width              = 220
+height             = 140
+x                  = 90
+y                  = 120
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0f0f1490"
+border        = "#ffffff10"
+border_radius = 14
+accent        = "#7c6fcd"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["cpu", "clock"]
+
+[[components]]
+type           = "text"
+value          = "CPU"
+x              = 14
+y              = 12
+font_size      = 10
+font_weight    = "700"
+color          = "#7c6fcd"
+letter_spacing = 2
+
+[[components]]
+type      = "text"
+value     = "{{cpu.usage}}%"
+x         = "right-14"
+y         = 12
+font_size = 12
+color     = "#ffffffcc"
+align     = "right"
+
+[[components]]
+type             = "bar"
+value            = "{{cpu.usage}}"
+x                = 14
+y                = 34
+width            = 192
+height           = 5
+color            = "#7c6fcd"
+background_color = "#ffffff12"
+border_radius    = 3
+
+[[components]]
+type             = "graph"
+id               = "cpu_graph"
+value            = "{{cpu.usage}}"
+x                = 14
+y                = 50
+width            = 192
+height           = 56
+history          = 60
+color            = "#7c6fcd"
+fill_color       = "#7c6fcd22"
+background_color = "#ffffff06"
+line_width       = 1
+
+[[components]]
+type      = "text"
+value     = "{{cpu.freq_ghz}} GHz · {{cpu.cores}} cores"
+x         = 14
+y         = 114
+font_size = 9
+color     = "#ffffff55"
+
+[[components]]
+type      = "text"
+value     = "{{clock.time}}"
+x         = "right-14"
+y         = 114
+font_size = 9
+color     = "#ffffff35"
+align     = "right"

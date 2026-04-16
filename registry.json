@@ -104,6 +104,66 @@
       "rating": 0.0,
       "rating_count": 0,
       "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-cpu",
+      "name": "CPU Pulse",
+      "slug": "windy-cpu",
+      "author": "windy",
+      "description": "Focused CPU usage widget with live graph",
+      "version": "1.0.0",
+      "tags": [
+        "cpu",
+        "system",
+        "graph"
+      ],
+      "category": "system",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-ram",
+      "name": "RAM Watch",
+      "slug": "windy-ram",
+      "author": "windy",
+      "description": "Memory usage and free space monitor",
+      "version": "1.0.0",
+      "tags": [
+        "ram",
+        "system",
+        "minimal"
+      ],
+      "category": "system",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
+    },
+    {
+      "id": "windy-uptime",
+      "name": "Uptime Card",
+      "slug": "windy-uptime",
+      "author": "windy",
+      "description": "Hostname, user and uptime summary",
+      "version": "1.0.0",
+      "tags": [
+        "sysinfo",
+        "uptime",
+        "minimal"
+      ],
+      "category": "system",
+      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/preview.png",
+      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/widget.zip",
+      "download_count": 0,
+      "rating": 0.0,
+      "rating_count": 0,
+      "windy_version_min": "0.1.0"
     }
   ]
 }
