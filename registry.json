@@ -1,210 +1,232 @@
 {
-  "version": "1",
-  "updated_at": "2026-04-14T20:48:00Z",
-  "base_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
-  "widgets": [
-    {
-      "id": "windy-clock",
-      "name": "Windy Clock",
-      "slug": "windy-clock",
-      "author": "windy",
-      "description": "Analog + digital clock and date widget",
-      "version": "1.0.0",
-      "tags": [
-        "clock",
-        "time",
-        "minimal"
-      ],
-      "category": "clock",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-clock/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-clock/widget.zip",
-      "download_count": 0,
-      "rating": 5.0,
-      "rating_count": 1,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-battery",
-      "name": "Battery",
-      "slug": "windy-battery",
-      "author": "windy",
-      "description": "Battery level and charging status",
-      "version": "1.0.0",
-      "tags": [
-        "battery",
-        "power",
-        "minimal"
-      ],
-      "category": "battery",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-date",
-      "name": "Date",
-      "slug": "windy-date",
-      "author": "windy",
-      "description": "Minimal widget showing date, day and week information",
-      "version": "1.0.0",
-      "tags": [
-        "clock",
-        "date",
-        "minimal"
-      ],
-      "category": "date",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-network",
-      "name": "Network Monitor",
-      "slug": "windy-network",
-      "author": "windy",
-      "description": "Network speed and traffic tracking — Pro mode example",
-      "version": "1.0.0",
-      "tags": [
-        "network",
-        "pro",
-        "graph"
-      ],
-      "category": "network",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-system",
-      "name": "System Monitor",
-      "slug": "windy-system",
-      "author": "windy",
-      "description": "System monitor showing CPU, RAM and disk usage",
-      "version": "1.0.0",
-      "tags": [
-        "system",
-        "cpu",
-        "ram",
-        "disk",
-        "monitor"
-      ],
-      "category": "system",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-cpu",
-      "name": "CPU Pulse",
-      "slug": "windy-cpu",
-      "author": "windy",
-      "description": "Focused CPU usage widget with live graph",
-      "version": "1.0.0",
-      "tags": [
-        "cpu",
-        "system",
-        "graph"
-      ],
-      "category": "system",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-ram",
-      "name": "RAM Watch",
-      "slug": "windy-ram",
-      "author": "windy",
-      "description": "Memory usage and free space monitor",
-      "version": "1.0.0",
-      "tags": [
-        "ram",
-        "system",
-        "minimal"
-      ],
-      "category": "system",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-uptime",
-      "name": "Uptime Card",
-      "slug": "windy-uptime",
-      "author": "windy",
-      "description": "Hostname, user and uptime summary",
-      "version": "1.0.0",
-      "tags": [
-        "sysinfo",
-        "uptime",
-        "minimal"
-      ],
-      "category": "system",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-solid-clock",
-      "name": "Solid Clock",
-      "slug": "windy-solid-clock",
-      "author": "windy",
-      "description": "Opaque desktop clock card",
-      "version": "1.0.0",
-      "tags": [
-        "clock",
-        "solid",
-        "minimal"
-      ],
-      "category": "clock",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    },
-    {
-      "id": "windy-solid-system",
-      "name": "Solid System Tile",
-      "slug": "windy-solid-system",
-      "author": "windy",
-      "description": "Opaque CPU and RAM status tile",
-      "version": "1.0.0",
-      "tags": [
-        "system",
-        "cpu",
-        "ram",
-        "solid"
-      ],
-      "category": "system",
-      "preview_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/preview.png",
-      "download_url": "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/widget.zip",
-      "download_count": 0,
-      "rating": 0.0,
-      "rating_count": 0,
-      "windy_version_min": "0.1.0"
-    }
-  ]
+    "version":  "1",
+    "updated_at":  "2026-04-17T15:54:05Z",
+    "base_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
+    "widgets":  [
+                    {
+                        "id":  "windy-battery",
+                        "name":  "Battery",
+                        "slug":  "windy-battery",
+                        "author":  "windy",
+                        "description":  "Battery level and charging status",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "battery",
+                                     "power",
+                                     "minimal"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-battery/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-clock",
+                        "name":  "Windy Clock",
+                        "slug":  "windy-clock",
+                        "author":  "windy",
+                        "description":  "Analog + digital clock and date widget",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "clock",
+                                     "time",
+                                     "minimal"
+                                 ],
+                        "category":  "clock",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-clock/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-clock/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-cpu",
+                        "name":  "CPU Pulse",
+                        "slug":  "windy-cpu",
+                        "author":  "windy",
+                        "description":  "Focused CPU usage widget with live graph",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "cpu",
+                                     "system",
+                                     "graph"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-cpu/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-date",
+                        "name":  "Date",
+                        "slug":  "windy-date",
+                        "author":  "windy",
+                        "description":  "Minimal widget showing date, day and week information",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "clock",
+                                     "date",
+                                     "minimal"
+                                 ],
+                        "category":  "clock",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-date/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-media-now",
+                        "name":  "Media Now",
+                        "slug":  "windy-media-now",
+                        "author":  "windy",
+                        "description":  "Now playing panel with title, artist and playback progress",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "media",
+                                     "music",
+                                     "minimal"
+                                 ],
+                        "category":  "media",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-media-now/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-media-now/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-network",
+                        "name":  "Network Monitor",
+                        "slug":  "windy-network",
+                        "author":  "windy",
+                        "description":  "Network speed and traffic tracking — Pro mode example",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "network",
+                                     "pro",
+                                     "graph"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-network-compact",
+                        "name":  "Network Compact",
+                        "slug":  "windy-network-compact",
+                        "author":  "windy",
+                        "description":  "Compact network throughput monitor with live history",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "network",
+                                     "system",
+                                     "graph"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network-compact/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-network-compact/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-ram",
+                        "name":  "RAM Watch",
+                        "slug":  "windy-ram",
+                        "author":  "windy",
+                        "description":  "Memory usage and free space monitor",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "ram",
+                                     "system",
+                                     "minimal"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-ram/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-solid-clock",
+                        "name":  "Solid Clock",
+                        "slug":  "windy-solid-clock",
+                        "author":  "windy",
+                        "description":  "Opaque desktop clock card",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "clock",
+                                     "solid",
+                                     "minimal"
+                                 ],
+                        "category":  "clock",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-clock/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-solid-system",
+                        "name":  "Solid System Tile",
+                        "slug":  "windy-solid-system",
+                        "author":  "windy",
+                        "description":  "Opaque CPU and RAM status tile",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "system",
+                                     "cpu",
+                                     "ram",
+                                     "solid"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-solid-system/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-system",
+                        "name":  "System Monitor",
+                        "slug":  "windy-system",
+                        "author":  "windy",
+                        "description":  "System monitor showing CPU, RAM and disk usage",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "system",
+                                     "cpu",
+                                     "ram",
+                                     "disk",
+                                     "monitor"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-system-badge",
+                        "name":  "System Badge",
+                        "slug":  "windy-system-badge",
+                        "author":  "windy",
+                        "description":  "System identity card with uptime and battery state",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "system",
+                                     "sysinfo",
+                                     "battery",
+                                     "minimal"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system-badge/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-system-badge/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-uptime",
+                        "name":  "Uptime Card",
+                        "slug":  "windy-uptime",
+                        "author":  "windy",
+                        "description":  "Hostname, user and uptime summary",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "sysinfo",
+                                     "uptime",
+                                     "minimal"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    }
+                ]
 }

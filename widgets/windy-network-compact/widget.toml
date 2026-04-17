@@ -1,0 +1,79 @@
+[widget]
+name        = "Network Compact"
+version     = "1.0.0"
+author      = "windy"
+description = "Compact network throughput monitor with live history"
+tags        = ["network", "system", "graph"]
+
+[window]
+width              = 240
+height             = 140
+x                  = 200
+y                  = 420
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#10121a90"
+border        = "#ffffff10"
+border_radius = 14
+accent        = "#5dade2"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["network", "clock"]
+
+[[components]]
+type      = "text"
+value     = "NETWORK"
+x         = 14
+y         = 12
+font_size = 10
+font_weight = "700"
+color     = "#5dade2"
+letter_spacing = 2
+
+[[components]]
+type      = "text"
+value     = "D {{network.down_kb}} KB/s"
+x         = 14
+y         = 34
+font_size = 11
+color     = "#ffffffd0"
+
+[[components]]
+type      = "text"
+value     = "U {{network.up_kb}} KB/s"
+x         = 14
+y         = 52
+font_size = 11
+color     = "#ffffffb0"
+
+[[components]]
+type             = "graph"
+id               = "net_down_graph"
+value            = "{{network.down_kb}}"
+min              = 0
+max              = 2048
+x                = 14
+y                = 70
+width            = 210
+height           = 42
+history          = 60
+color            = "#5dade2"
+fill_color       = "#5dade222"
+background_color = "#ffffff08"
+line_width       = 1
+
+[[components]]
+type      = "text"
+value     = "{{clock.time}}"
+x         = "right-14"
+y         = 118
+font_size = 9
+color     = "#ffffff40"
+align     = "right"

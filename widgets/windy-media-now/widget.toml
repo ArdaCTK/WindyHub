@@ -1,0 +1,87 @@
+[widget]
+name        = "Media Now"
+version     = "1.0.0"
+author      = "windy"
+description = "Now playing panel with title, artist and playback progress"
+tags        = ["media", "music", "minimal"]
+
+[window]
+width              = 250
+height             = 130
+x                  = 180
+y                  = 280
+transparency       = true
+hide_on_fullscreen = true
+
+[theme]
+background    = "#0f101690"
+border        = "#ffffff10"
+border_radius = 14
+accent        = "#ff9f43"
+font_family   = "Segoe UI"
+font_color    = "#ffffffcc"
+
+[update]
+interval = 1000
+
+[data]
+sources = ["media", "clock"]
+
+[[components]]
+type      = "text"
+value     = "NOW PLAYING"
+x         = 14
+y         = 12
+font_size = 9
+font_weight = "700"
+color     = "#ff9f43"
+letter_spacing = 2
+
+[[components]]
+type      = "text"
+value     = "{{media.title}}"
+x         = 14
+y         = 34
+font_size = 12
+font_weight = "600"
+color     = "#ffffffdd"
+max_width = 220
+
+[[components]]
+type      = "text"
+value     = "{{media.artist}}"
+x         = 14
+y         = 54
+font_size = 10
+color     = "#ffffff85"
+max_width = 220
+
+[[components]]
+type             = "bar"
+value            = "{{media.progress}}"
+min              = 0
+max              = 100
+x                = 14
+y                = 76
+width            = 222
+height           = 5
+color            = "#ff9f43"
+background_color = "#ffffff14"
+border_radius    = 3
+
+[[components]]
+type      = "text"
+value     = "{{media.position_secs}}s / {{media.duration_secs}}s"
+x         = 14
+y         = 94
+font_size = 9
+color     = "#ffffff50"
+
+[[components]]
+type      = "text"
+value     = "{{clock.time}}"
+x         = "right-14"
+y         = 108
+font_size = 10
+color     = "#ffffff40"
+align     = "right"
