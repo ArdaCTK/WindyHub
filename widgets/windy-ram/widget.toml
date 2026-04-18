@@ -6,8 +6,8 @@ description = "Memory usage and free space monitor"
 tags        = ["ram", "system", "minimal"]
 
 [window]
-width              = 220
-height             = 150
+width              = 280
+height             = 130
 x                  = 120
 y                  = 160
 transparency       = true
@@ -72,11 +72,3 @@ x         = 14
 y         = 78
 font_size = 11
 color     = "#ffffff70"
-
-[[components]]
-type      = "text"
-value     = "{{clock.day}} · {{clock.time}}"
-x         = 14
-y         = 116
-font_size = 10
-color     = "#ffffff40"

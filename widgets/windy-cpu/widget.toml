@@ -6,8 +6,8 @@ description = "Focused CPU usage widget with live graph"
 tags        = ["cpu", "system", "graph"]
 
 [window]
-width              = 220
-height             = 140
+width              = 275
+height             = 170
 x                  = 90
 y                  = 120
 transparency       = true

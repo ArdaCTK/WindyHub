@@ -6,8 +6,8 @@ description = "Minimal widget showing date, day and week information"
 tags        = ["clock", "date", "minimal"]
 
 [window]
-width              = 200
-height             = 90
+width              = 240
+height             = 120
 x                  = 40
 y                  = 900
 transparency       = true

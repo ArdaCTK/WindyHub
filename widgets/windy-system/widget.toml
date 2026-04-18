@@ -6,8 +6,8 @@ description = "System monitor showing CPU, RAM and disk usage"
 tags        = ["system", "cpu", "ram", "disk", "monitor"]
 
 [window]
-width              = 230
-height             = 280
+width              = 350
+height             = 350
 x                  = 40
 y                  = 280
 transparency       = true
@@ -164,12 +164,3 @@ height           = 3
 color            = "#e0b852"
 background_color = "#ffffff12"
 border_radius    = 2
-
-[[components]]
-type      = "text"
-value     = "{{clock.time}}"
-x         = "right-16"
-y         = 264
-font_size = 9
-color     = "#ffffff25"
-align     = "right"

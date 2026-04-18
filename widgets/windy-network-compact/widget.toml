@@ -6,8 +6,8 @@ description = "Compact network throughput monitor with live history"
 tags        = ["network", "system", "graph"]
 
 [window]
-width              = 240
-height             = 140
+width              = 300
+height             = 180
 x                  = 200
 y                  = 420
 transparency       = true
@@ -68,12 +68,3 @@ color            = "#5dade2"
 fill_color       = "#5dade222"
 background_color = "#ffffff08"
 line_width       = 1
-
-[[components]]
-type      = "text"
-value     = "{{clock.time}}"
-x         = "right-14"
-y         = 118
-font_size = 9
-color     = "#ffffff40"
-align     = "right"

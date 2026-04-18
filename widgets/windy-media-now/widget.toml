@@ -6,8 +6,8 @@ description = "Now playing panel with title, artist and playback progress"
 tags        = ["media", "music", "minimal"]
 
 [window]
-width              = 250
-height             = 130
+width              = 320
+height             = 160
 x                  = 180
 y                  = 280
 transparency       = true
@@ -76,12 +76,3 @@ x         = 14
 y         = 94
 font_size = 9
 color     = "#ffffff50"
-
-[[components]]
-type      = "text"
-value     = "{{clock.time}}"
-x         = "right-14"
-y         = 108
-font_size = 10
-color     = "#ffffff40"
-align     = "right"

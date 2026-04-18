@@ -6,8 +6,8 @@ description = "Battery level and charging status"
 tags        = ["battery", "power", "minimal"]
 
 [window]
-width              = 160
-height             = 70
+width              = 200
+height             = 100
 x                  = 40
 y                  = 800
 transparency       = true

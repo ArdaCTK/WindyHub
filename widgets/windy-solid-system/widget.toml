@@ -6,8 +6,8 @@ description = "Opaque CPU and RAM status tile"
 tags        = ["system", "cpu", "ram", "solid"]
 
 [window]
-width              = 240
-height             = 145
+width              = 300
+height             = 150
 x                  = 260
 y                  = 220
 transparency       = false
@@ -74,12 +74,3 @@ height = 5
 color = "#52e07c"
 background_color = "#ffffff18"
 border_radius = 3
-
-[[components]]
-type = "text"
-value = "{{clock.time}}"
-x = "right-14"
-y = 118
-font_size = 11
-color = "#b8c0dd"
-align = "right"

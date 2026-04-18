@@ -7,8 +7,8 @@ preview     = "preview.png"
 tags        = ["clock", "time", "minimal"]
 
 [window]
-width              = 180
-height             = 210
+width              = 220
+height             = 280
 x                  = 40
 y                  = 40
 anchor             = "top-left"
