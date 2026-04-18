@@ -1,6 +1,6 @@
 {
     "version":  "1",
-    "updated_at":  "2026-04-17T15:54:05Z",
+    "updated_at":  "2026-04-18T12:00:00Z",
     "base_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
     "widgets":  [
                     {
@@ -226,6 +226,24 @@
                         "category":  "system",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/preview.png",
                         "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-uptime/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "windy-youtube-player",
+                        "name":  "YouTube Player",
+                        "slug":  "windy-youtube-player",
+                        "author":  "windy",
+                        "description":  "Paste a YouTube URL and play it inside the widget with full controls",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "media",
+                                     "youtube",
+                                     "video",
+                                     "pro"
+                                 ],
+                        "category":  "media",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-youtube-player/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-youtube-player/widget.zip",
                         "windy_version_min":  "0.1.0"
                     }
                 ]
