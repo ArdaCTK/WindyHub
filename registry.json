@@ -1,4 +1,4 @@
-{
+﻿{
     "version":  "1",
     "updated_at":  "2026-05-09T00:00:00Z",
     "base_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
@@ -93,11 +93,11 @@
                         "name":  "Network Monitor",
                         "slug":  "windy-network",
                         "author":  "windy",
-                        "description":  "Network speed and traffic tracking — Pro mode example",
+                        "description":  "Network speed and traffic tracking â€” Advanced mode example",
                         "version":  "1.0.0",
                         "tags":  [
                                      "network",
-                                     "pro",
+                                     "advanced",
                                      "graph"
                                  ],
                         "category":  "system",
@@ -239,7 +239,7 @@
                                      "media",
                                      "youtube",
                                      "video",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "media",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/windy-youtube-player/preview.png",
@@ -257,7 +257,7 @@
                                      "launcher",
                                      "apps",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "productivity",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-launcher/preview.png",
@@ -275,7 +275,7 @@
                                      "lyrics",
                                      "media",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "media",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-lyrics/preview.png",
@@ -293,7 +293,7 @@
                                      "media",
                                      "music",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "media",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-media/preview.png",
@@ -312,7 +312,7 @@
                                      "productivity",
                                      "timer",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "productivity",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-pomodoro/preview.png",
@@ -349,7 +349,7 @@
                                      "todo",
                                      "productivity",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "productivity",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-todo/preview.png",
@@ -358,7 +358,7 @@
                     },
                     {
                         "id":  "cat-weather",
-                        "name":  "Catppuccin Weather Pro",
+                        "name":  "Catppuccin Weather Advanced",
                         "slug":  "cat-weather",
                         "author":  "windy",
                         "description":  "7-day Open-Meteo forecast with a Chart.js temperature graph",
@@ -368,7 +368,7 @@
                                      "forecast",
                                      "chart",
                                      "catppuccin",
-                                     "pro"
+                                     "advanced"
                                  ],
                         "category":  "weather",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-weather/preview.png",
@@ -377,3 +377,4 @@
                     }
                 ]
 }
+

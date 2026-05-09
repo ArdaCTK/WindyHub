@@ -18,7 +18,7 @@ windy-hub/
 ├── widgets/
 │   ├── my-widget/
 │   │   ├── widget.toml
-│   │   ├── index.html     (Pro mode)
+│   │   ├── index.html     (Advanced mode)
 │   │   ├── preview.png    (512x320)
 │   │   └── widget.zip     ← Users download this
 │   └── ...
@@ -31,7 +31,7 @@ windy-hub/
 
 **widget.zip must contain:**
 - `widget.toml` — Required. Widget configuration file
-- `index.html` — Required for Pro mode widgets only. Simple mode widgets don't need this
+- `index.html` — Required for Advanced mode widgets only. Simple mode widgets don't need this
 
 ### Optional Files
 
@@ -43,9 +43,9 @@ windy-hub/
 ```
 widget.zip
 ├── widget.toml           ← Required (all widgets)
-├── index.html            ← Required (Pro mode only)
+├── index.html            ← Required (Advanced mode only)
 ├── preview.png           ← Optional (Widgets preview)
-├── assets/               ← Optional (Pro mode assets)
+├── assets/               ← Optional (Advanced mode assets)
 │   ├── icon.png
 │   └── style.css
 └── ...
@@ -74,7 +74,7 @@ zip -r widget.zip *
 - Windy renders HTML automatically from toml configuration
 - No `index.html` needed
 
-**Pro Mode:**
+**Advanced Mode:**
 - `widget.toml` + `index.html` required
 - Full HTML/CSS/JS control
 - Can include external assets
