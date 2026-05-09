@@ -194,17 +194,17 @@
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <span class="header-time" id="clock">--:--</span>
-      <button class="edit-btn" id="editBtn" onclick="toggleEdit()">✎ Edit</button>
+      <button class="edit-btn" id="editBtn" onclick="toggleEdit()">✎ Düzenle</button>
     </div>
   </div>
 
   <div class="items" id="itemList"></div>
 
   <div class="add-form" id="addForm">
-    <input id="fName"  placeholder="Name (for example: GitHub)" />
-    <input id="fUrl"   placeholder="URL or app path (for example: https://github.com)" />
+    <input id="fName"  placeholder="İsim (ör: GitHub)" />
+    <input id="fUrl"   placeholder="URL veya uygulama yolu (ör: https://github.com)" />
     <div class="form-row">
-      <input id="fIcon"  placeholder="Emoji icon 🚀" style="width:80px;" />
+      <input id="fIcon"  placeholder="Emoji ikon 🚀" style="width:80px;" />
       <select id="fType">
         <option value="site">🌐 Site</option>
         <option value="app">💻 Uygulama</option>
@@ -234,7 +234,7 @@
     { name:'Discord',   url:'discord:',              icon:'💬', type:'app',  color:'#b4befe' },
     { name:'Notion',    url:'https://notion.so',     icon:'📝', type:'site', color:'#f9e2af' },
     { name:'ChatGPT',   url:'https://chat.openai.com',icon:'🤖',type:'site', color:'#94e2d5' },
-    { name:'Task Mgr',url:'taskmgr.exe',           icon:'📊', type:'app',  color:'#fab387' },
+    { name:'Görev Ynt.',url:'taskmgr.exe',           icon:'📊', type:'app',  color:'#fab387' },
   ];
 
   let items = [];
@@ -339,7 +339,7 @@
     editMode = !editMode;
     const btn  = document.getElementById('editBtn');
     const form = document.getElementById('addForm');
-    btn.textContent = editMode ? '✓ Done' : '✎ Edit';
+    btn.textContent = editMode ? '✓ Bitti' : '✎ Düzenle';
     btn.className   = 'edit-btn' + (editMode ? ' active' : '');
     form.className  = 'add-form' + (editMode ? ' show' : '');
     render();

@@ -79,24 +79,24 @@
   <div class="header">
     <div class="hrow1">
       <span class="htitle">✓ Todo</span>
-      <span class="hstats" id="statsText"><span>0</span>/0 completed</span>
+      <span class="hstats" id="statsText"><span>0</span>/0 tamamlandı</span>
     </div>
     <div class="filters">
-      <button class="ftab active" onclick="setFilter('all')">All</button>
-      <button class="ftab"        onclick="setFilter('active')">Active</button>
-      <button class="ftab"        onclick="setFilter('done')">Done</button>
-      <button class="ftab"        onclick="setFilter('urgent')">🔴 Urgent</button>
+      <button class="ftab active" onclick="setFilter('all')">Tümü</button>
+      <button class="ftab"        onclick="setFilter('active')">Aktif</button>
+      <button class="ftab"        onclick="setFilter('done')">Bitti</button>
+      <button class="ftab"        onclick="setFilter('urgent')">🔴 Acil</button>
     </div>
   </div>
 
   <div class="add-area">
-    <select class="prio-sel" id="prioSel" title="Priority">
+    <select class="prio-sel" id="prioSel" title="Öncelik">
       <option value="0">⬜</option>
       <option value="1">🟡</option>
       <option value="2">🟠</option>
       <option value="3">🔴</option>
     </select>
-    <input class="add-input" id="todoInput" placeholder="Add a new task..."
+    <input class="add-input" id="todoInput" placeholder="Yeni görev ekle…"
       onkeydown="if(event.key==='Enter') addTodo()" />
     <button class="add-btn" onclick="addTodo()">+</button>
   </div>
@@ -105,7 +105,7 @@
 
   <div class="footer">
     <button class="clear-btn" onclick="clearDone()">Bitenleri Temizle</button>
-    <span class="count" id="countText"><span>0</span> tasks left</span>
+    <span class="count" id="countText"><span>0</span> görev kaldı</span>
   </div>
 </div>
 
@@ -122,9 +122,9 @@
     const v = await windy.storage.get('cat_todos').catch(()=>null);
     if (v) todos = v;
     else todos = [
-      { id:1, text:'Try Windy widgets', done:false, prio:2, date:'Today' },
-      { id:2, text:'Explore the Catppuccin theme', done:false, prio:1, date:'Today' },
-      { id:3, text:'Start the Pomodoro timer', done:false, prio:0, date:'Today' },
+      { id:1, text:'Windy widgetları dene', done:false, prio:2, date:'Bugün' },
+      { id:2, text:'Catppuccin temasını incele', done:false, prio:1, date:'Bugün' },
+      { id:3, text:'Pomodoro zamanlayıcıyı başlat', done:false, prio:0, date:'Bugün' },
     ];
     render();
   }
@@ -150,14 +150,14 @@
     const total = todos.length;
     const remaining = todos.filter(t=>!t.done).length;
 
-    document.getElementById('statsText').innerHTML = `<span>${done}</span>/${total} completed`;
-    document.getElementById('countText').innerHTML  = `<span>${remaining}</span> tasks left`;
+    document.getElementById('statsText').innerHTML = `<span>${done}</span>/${total} tamamlandı`;
+    document.getElementById('countText').innerHTML  = `<span>${remaining}</span> görev kaldı`;
 
     if (items.length === 0) {
       list.innerHTML = `<div class="empty-state"><div class="eicon">🎉</div><p>${
-        filter==='all' ? 'No tasks yet' :
-        filter==='done'? 'Nothing completed yet' :
-        filter==='urgent'? 'No urgent tasks' : 'All completed!'
+        filter==='all' ? 'Henüz görev yok' :
+        filter==='done'? 'Tamamlanan yok' :
+        filter==='urgent'? 'Acil görev yok' : 'Tümü tamamlandı!'
       }</p></div>`;
       return;
     }

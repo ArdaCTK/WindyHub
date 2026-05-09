@@ -1,6 +1,6 @@
 {
     "version":  "1",
-    "updated_at":  "2026-05-02T00:00:00Z",
+    "updated_at":  "2026-05-09T00:00:00Z",
     "base_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main",
     "widgets":  [
                     {
@@ -247,6 +247,135 @@
                         "windy_version_min":  "0.1.0"
                     },
                     {
+                        "id":  "cat-launcher",
+                        "name":  "Catppuccin Launcher",
+                        "slug":  "cat-launcher",
+                        "author":  "windy",
+                        "description":  "Editable app and website launcher with persistent shortcuts",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "launcher",
+                                     "apps",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "productivity",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-launcher/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-launcher/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-lyrics",
+                        "name":  "Catppuccin Lyrics",
+                        "slug":  "cat-lyrics",
+                        "author":  "windy",
+                        "description":  "Synchronized lyrics from LRCLib for the currently playing track",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "lyrics",
+                                     "media",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "media",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-lyrics/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-lyrics/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-media",
+                        "name":  "Catppuccin Media",
+                        "slug":  "cat-media",
+                        "author":  "windy",
+                        "description":  "Now Playing card with album art, progress, controls, and volume",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "media",
+                                     "music",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "media",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-media/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-media/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-pomodoro",
+                        "name":  "Catppuccin Pomodoro",
+                        "slug":  "cat-pomodoro",
+                        "author":  "windy",
+                        "description":  "Full Pomodoro timer with stats, notifications, and persistent storage",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "pomodoro",
+                                     "productivity",
+                                     "timer",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "productivity",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-pomodoro/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-pomodoro/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-system",
+                        "name":  "Catppuccin System",
+                        "slug":  "cat-system",
+                        "author":  "windy",
+                        "description":  "CPU, RAM, disk, and network status in a Catppuccin Mocha card",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "system",
+                                     "cpu",
+                                     "ram",
+                                     "catppuccin",
+                                     "minimal"
+                                 ],
+                        "category":  "system",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-system/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-system/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-todo",
+                        "name":  "Catppuccin Todo",
+                        "slug":  "cat-todo",
+                        "author":  "windy",
+                        "description":  "Full todo list with priority, filters, persistence, and drag reorder",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "todo",
+                                     "productivity",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "productivity",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-todo/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-todo/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
+                        "id":  "cat-weather",
+                        "name":  "Catppuccin Weather Pro",
+                        "slug":  "cat-weather",
+                        "author":  "windy",
+                        "description":  "7-day Open-Meteo forecast with a Chart.js temperature graph",
+                        "version":  "1.0.0",
+                        "tags":  [
+                                     "weather",
+                                     "forecast",
+                                     "chart",
+                                     "catppuccin",
+                                     "pro"
+                                 ],
+                        "category":  "weather",
+                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-weather/preview.png",
+                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/cat-weather/widget.zip",
+                        "windy_version_min":  "0.1.0"
+                    },
+                    {
                         "id":  "impossible-pomodoro",
                         "name":  "Catppuccin Pomodoro",
                         "slug":  "impossible-pomodoro",
@@ -380,25 +509,6 @@
                         "category":  "media",
                         "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/media/preview.png",
                         "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/media/widget.zip",
-                        "windy_version_min":  "0.1.0"
-                    },
-                    {
-                        "id":  "system-cat",
-                        "name":  "Catppuccin System",
-                        "slug":  "system-cat",
-                        "author":  "windy",
-                        "description":  "CPU, RAM, disk, and network status in a Catppuccin Mocha card",
-                        "version":  "1.0.0",
-                        "tags":  [
-                                     "system",
-                                     "cpu",
-                                     "ram",
-                                     "catppuccin",
-                                     "minimal"
-                                 ],
-                        "category":  "system",
-                        "preview_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/system-cat/preview.png",
-                        "download_url":  "https://raw.githubusercontent.com/ArdaCTK/WindyHub/main/widgets/system-cat/widget.zip",
                         "windy_version_min":  "0.1.0"
                     }
                 ]

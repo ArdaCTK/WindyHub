@@ -2,8 +2,8 @@
 name        = "Catppuccin Lyrics"
 version     = "1.0.0"
 author      = "windy"
-description = "Synchronized lyrics from LRCLib for the currently playing track"
-tags        = ["lyrics", "media", "catppuccin", "pro", "impossible"]
+description = "LRCLib API ile senkronize şarkı sözleri — sadece Windy'de mümkün"
+tags        = ["lyrics", "media", "catppuccin", "pro"]
 
 [window]
 width              = 320

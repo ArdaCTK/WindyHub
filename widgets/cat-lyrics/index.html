@@ -41,7 +41,7 @@
     overflow: hidden;
   }
 
-  /* Header: track info */
+  /* Header: şarkı bilgisi */
   .header {
     padding: 14px 16px 10px;
     background: linear-gradient(180deg, var(--surface0) 0%, transparent 100%);
@@ -192,7 +192,7 @@
   <div class="header">
     <div class="album-art" id="art">♪</div>
     <div class="song-info">
-      <div class="song-title" id="title">Nothing playing</div>
+      <div class="song-title" id="title">Çalan bir şey yok</div>
       <div class="song-artist" id="artist">Windy Lyrics Widget</div>
     </div>
     <div class="status-dot idle" id="dot"></div>
@@ -208,7 +208,7 @@
     <div class="lyrics-scroll" id="scroll">
       <div class="no-lyrics" id="no-lyrics">
         <div class="icon">🎵</div>
-        <div class="msg">Waiting for music...</div>
+        <div class="msg">Şarkı çalmayı bekliyor…</div>
       </div>
     </div>
   </div>
@@ -330,7 +330,7 @@
         $progress.style.width = pct.toFixed(2) + '%';
         duration = media.duration_secs;
 
-        // Update synchronized lyrics.
+        // Senkronize lyric güncelle
         updateActiveLineAt(media.position_secs);
       }
 
@@ -340,12 +340,12 @@
         $art.innerHTML = '♪';
       }
 
-      // Track changed?
+      // Şarkı değişti mi?
       const newTitle = media.title || '';
       if (newTitle === prevTitle) return;
       prevTitle = newTitle;
 
-      $title.textContent  = newTitle  || 'Nothing playing';
+      $title.textContent  = newTitle  || 'Çalan bir şey yok';
       $artist.textContent = media.artist || '—';
       $dot.className      = 'status-dot' + (media.playing ? '' : ' idle');
 
@@ -354,9 +354,9 @@
         renderLyrics(); return;
       }
 
-      // New track: fetch lyrics from LRCLib.
+      // Yeni şarkı → LRCLib'den sözleri çek
       lyricsLines = []; plainLyrics = []; currentIdx = -1;
-      $scroll.innerHTML = '<div class="no-lyrics"><div class="icon">⏳</div><div class="msg">Searching lyrics...</div></div>';
+      $scroll.innerHTML = '<div class="no-lyrics"><div class="icon">⏳</div><div class="msg">Sözler aranıyor…</div></div>';
       $scroll.style.transform = 'translateY(0)';
 
       const data = await fetchLyrics(newTitle, media.artist, media.album);
@@ -371,16 +371,16 @@
       renderLyrics();
     });
 
-    // Initial load: process current media immediately.
+    // İlk yükleme — mevcut medyayı hemen işle
     windy.data.get('media').then(m => {
       if (m && m.title) {
-        // Call the media handler directly.
+        // Direkt olarak media handler'ı çağır
         prevTitle = ''; // reset so it processes
         windy.data.subscribe('media', (ignored) => {}); // force one tick
       }
     }).catch(() => {});
 
-    // Manual testing can be added through the widget context menu.
+    // Manuel test için: widget sağ tıkla menüden manuel şarkı girebilir
     window.__windyTestMedia = function(title, artist) {
       prevTitle = '';
       $title.textContent  = title;

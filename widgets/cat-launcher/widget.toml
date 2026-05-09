@@ -2,8 +2,8 @@
 name        = "Catppuccin Launcher"
 version     = "1.0.0"
 author      = "windy"
-description = "Editable app and website launcher with persistent shortcuts"
-tags        = ["launcher", "apps", "catppuccin", "pro", "impossible"]
+description = "Uygulama ve site kısayolları — editlenebilir, sürüklenebilir"
+tags        = ["launcher", "apps", "catppuccin", "pro"]
 
 [window]
 width              = 280

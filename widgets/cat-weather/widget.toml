@@ -2,8 +2,8 @@
 name        = "Catppuccin Weather Pro"
 version     = "1.0.0"
 author      = "windy"
-description = "7-day Open-Meteo forecast with a Chart.js temperature graph"
-tags        = ["weather", "forecast", "chart", "catppuccin", "pro", "impossible"]
+description = "Open-Meteo API ile 7 günlük tahmin + Chart.js grafiği — Rainmeter'da imkansız"
+tags        = ["weather", "forecast", "chart", "catppuccin", "pro"]
 
 [window]
 width              = 340

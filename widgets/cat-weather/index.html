@@ -40,13 +40,13 @@
 </head>
 <body>
 <div class="root" id="root">
-  <div class="loading" id="loading"><div class="spin"></div> Loading weather...</div>
+  <div class="loading" id="loading"><div class="spin"></div> Hava durumu yükleniyor…</div>
 </div>
 <script>
 (function() {
-  // Default location when geolocation is unavailable.
-  const DEFAULT_LAT = 40.7128; // New York
-  const DEFAULT_LON = -74.0060;
+  // Türkiye varsayılan konum (geolocation yoksa)
+  const DEFAULT_LAT = 38.4192; // İzmir
+  const DEFAULT_LON = 27.1287;
 
   const WMO_ICONS = {
     0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️',
@@ -59,16 +59,16 @@
   };
 
   const WMO_LABELS = {
-    0:'Clear', 1:'Mostly Clear', 2:'Partly Cloudy', 3:'Cloudy',
-    45:'Fog', 48:'Fog',
-    51:'Drizzle', 53:'Drizzle', 55:'Heavy Drizzle',
-    61:'Light Rain', 63:'Rain', 65:'Heavy Rain',
-    71:'Light Snow', 73:'Snow', 75:'Heavy Snow',
-    80:'Showers', 81:'Heavy Showers', 82:'Severe Showers',
-    95:'Thunderstorm', 96:'Storm', 99:'Severe Storm'
+    0:'Açık', 1:'Çoğunlukla Açık', 2:'Parçalı Bulutlu', 3:'Bulutlu',
+    45:'Sisli', 48:'Sisli',
+    51:'Çisenti', 53:'Çisenti', 55:'Yoğun Çisenti',
+    61:'Hafif Yağmur', 63:'Yağmur', 65:'Yoğun Yağmur',
+    71:'Hafif Kar', 73:'Kar', 75:'Yoğun Kar',
+    80:'Sağanak', 81:'Kuvvetli Sağanak', 82:'Çok Kuvvetli Sağanak',
+    95:'Gök Gürültülü', 96:'Fırtına', 99:'Şiddetli Fırtına'
   };
 
-  const DAYS_TR = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const DAYS_TR = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
 
   let chart = null;
 
@@ -96,7 +96,7 @@
     const hourly = data.hourly;
     const daily  = data.daily;
 
-    // Next 24 hours (8 data points)
+    // Sonraki 24 saat (8 veri noktası)
     const now  = new Date();
     const nowH = now.getHours();
     const sliceStart = hourly.time.findIndex(t => new Date(t).getHours() >= nowH);
@@ -120,15 +120,15 @@
       <div class="details">
         <div class="detail-chip"><span>Hissedilen</span>${Math.round(c.apparent_temperature)}°C</div>
         <div class="detail-chip"><span>Nem</span>${c.relativehumidity_2m}%</div>
-        <div class="detail-chip"><span>Wind</span>${Math.round(c.windspeed_10m)} km/h</div>
-        <div class="detail-chip"><span>High</span>${Math.round(daily.temperature_2m_max[0])}°C</div>
-        <div class="detail-chip"><span>Low</span>${Math.round(daily.temperature_2m_min[0])}°C</div>
+        <div class="detail-chip"><span>Rüzgar</span>${Math.round(c.windspeed_10m)} km/h</div>
+        <div class="detail-chip"><span>En Yüksek</span>${Math.round(daily.temperature_2m_max[0])}°C</div>
+        <div class="detail-chip"><span>En Düşük</span>${Math.round(daily.temperature_2m_min[0])}°C</div>
       </div>
       <div class="chart-wrap"><canvas id="tempChart" height="80"></canvas></div>
       <div class="days" id="days"></div>
     `;
 
-    // Chart.js 24h temperature chart
+    // Chart.js — 24h sıcaklık grafiği
     const ctx = document.getElementById('tempChart').getContext('2d');
     chart = new Chart(ctx, {
       type:'line',
@@ -160,7 +160,7 @@
       }
     });
 
-    // 7-day forecast
+    // 7 günlük tahmin
     const daysEl = document.getElementById('days');
     for (let i=0; i<7; i++) {
       const d    = new Date(daily.time[i]);
@@ -180,7 +180,7 @@
   async function load(lat, lon, city) {
     try {
       const data = await fetchWeather(lat, lon);
-      render(data, city || 'New York');
+      render(data, city || 'İzmir');
     } catch(e) {
       document.getElementById('root').innerHTML =
         `<div class="loading" style="color:#f38ba8">⚠ Hata: ${e.message}</div>`;
@@ -191,7 +191,7 @@
     const windy = window.__windy__;
 
     // Storage'dan son konumu kontrol et
-    let lat = DEFAULT_LAT, lon = DEFAULT_LON, city = 'New York';
+    let lat = DEFAULT_LAT, lon = DEFAULT_LON, city = 'İzmir';
     if (windy) {
       const saved = await windy.storage.get('weather_loc').catch(() => null);
       if (saved) { lat = saved.lat; lon = saved.lon; city = saved.city; }
@@ -199,11 +199,11 @@
 
     load(lat, lon, city);
 
-    // Update every 30 minutes
+    // 30 dk'da bir güncelle
     setInterval(() => load(lat, lon, city), 30 * 60 * 1000);
   }
 
-  // Works even when __windy__ is not available.
+  // __windy__ olmasa da çalış
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

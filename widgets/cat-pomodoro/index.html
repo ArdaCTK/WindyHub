@@ -55,9 +55,9 @@
 <body>
 <div class="root">
   <div class="mode-tabs">
-    <button class="mtab work active" onclick="setMode('work',25,'Focus')">Focus</button>
-    <button class="mtab short" onclick="setMode('short',5,'Short Break')">Short</button>
-    <button class="mtab long"  onclick="setMode('long',15,'Long Break')">Long</button>
+    <button class="mtab work active" onclick="setMode('work',25,'Çalışma')">Çalışma</button>
+    <button class="mtab short" onclick="setMode('short',5,'Kısa Mola')">Kısa</button>
+    <button class="mtab long"  onclick="setMode('long',15,'Uzun Mola')">Uzun</button>
   </div>
 
   <div class="timer-wrap">
@@ -70,7 +70,7 @@
     </svg>
     <div class="timer-text">
       <span class="timer-time" id="timerDisplay">25:00</span>
-      <span class="timer-label" id="timerLabel">Focus</span>
+      <span class="timer-label" id="timerLabel">Çalışma</span>
     </div>
   </div>
 
@@ -83,7 +83,7 @@
   <div class="stats">
     <div class="stat">
       <span class="stat-val" id="todayPomodoros" style="color:var(--red)">0</span>
-      <span class="stat-lbl">Today</span>
+      <span class="stat-lbl">Bugün</span>
     </div>
     <div class="stat">
       <span class="stat-val" id="totalPomodoros" style="color:var(--mauve)">0</span>
@@ -107,9 +107,9 @@
 (function() {
   // ─── State ────────────────────────────────────────────────────────────────
   const MODES = {
-    work:  { label:'Focus',   mins:25, color:'#f38ba8' },
-    short: { label:'Short Break', mins:5,  color:'#a6e3a1' },
-    long:  { label:'Long Break', mins:15, color:'#89b4fa' },
+    work:  { label:'Çalışma',   mins:25, color:'#f38ba8' },
+    short: { label:'Kısa Mola', mins:5,  color:'#a6e3a1' },
+    long:  { label:'Uzun Mola', mins:15, color:'#89b4fa' },
   };
 
   let mode      = 'work';
@@ -117,10 +117,10 @@
   let remaining = 25*60;
   let running   = false;
   let timer     = null;
-  let sessions  = 0; // completed pomodoros in this round
+  let sessions  = 0; // bu seride tamamlanan pomodoro sayısı
   let windy;
 
-  // Stats loaded from storage
+  // Stats (storage'dan yüklenir)
   let stats = { today:0, total:0, streak:0, lastDate:'' };
 
   const CIRC = 2 * Math.PI * 50; // 314.16
@@ -214,15 +214,15 @@
       }
       saveStats();
 
-      // Notification
-      if (windy) windy.system.notify('🍅 Pomodoro', 'Nice work! Time for a break.');
+      // Bildirim
+      if (windy) windy.system.notify('🍅 Pomodoro', 'Tebrikler! Mola zamanı.');
 
-      // Switch to break mode automatically
-      if (sessions === 0) setMode('long', 15, 'Long Break');
-      else                setMode('short', 5, 'Short Break');
+      // Otomatik mola moda geç
+      if (sessions === 0) setMode('long', 15, 'Uzun Mola');
+      else                setMode('short', 5, 'Kısa Mola');
     } else if (mode !== 'work') {
-      if (windy) windy.system.notify('⏰ Windy', 'Break is over. Back to focus!');
-      setMode('work', 25, 'Focus');
+      if (windy) windy.system.notify('⏰ Windy', 'Mola bitti, çalışmaya devam!');
+      setMode('work', 25, 'Çalışma');
     }
 
     render();
@@ -238,7 +238,7 @@
     if (!windy) return;
     const saved = await windy.storage.get('pomo_stats').catch(() => null);
     if (saved) {
-      // Reset the today counter when the day changes
+      // Bugün farklıysa today sayacını sıfırla
       const today = new Date().toDateString();
       if (saved.lastDate !== today) saved.today = 0;
       stats = { ...stats, ...saved };

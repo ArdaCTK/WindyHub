@@ -2,7 +2,7 @@
 name        = "Catppuccin Todo"
 version     = "1.0.0"
 author      = "windy"
-description = "Full todo list with priority, filters, persistence, and drag reorder"
+description = "Tam özellikli yapılacaklar listesi — öncelik, filtre, persist, drag-reorder"
 tags        = ["todo", "productivity", "catppuccin", "pro", "impossible"]
 
 [window]

@@ -2,13 +2,13 @@
 name        = "Catppuccin Pomodoro"
 version     = "1.0.0"
 author      = "windy"
-description = "Full Pomodoro timer with stats, notifications, and persistent storage"
-tags        = ["pomodoro", "productivity", "timer", "catppuccin", "pro", "impossible"]
+description = "Tam işlevsel Pomodoro zamanlayıcı — istatistikler, bildirimler, storage"
+tags        = ["pomodoro", "productivity", "timer", "catppuccin", "pro"]
 
 [window]
 width              = 220
 height             = 260
-x                  = 800
+x                  = 700
 y                  = 400
 transparency       = true
 hide_on_fullscreen = false

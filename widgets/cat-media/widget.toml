@@ -2,8 +2,8 @@
 name        = "Catppuccin Media"
 version     = "1.0.0"
 author      = "windy"
-description = "Now Playing card with album art, progress, controls, and volume"
-tags        = ["media", "music", "catppuccin", "pro", "minimal"]
+description = "Now Playing — albüm kapağı, ilerleme çubuğu, kontroller"
+tags        = ["media", "music", "catppuccin", "pro"]
 
 [window]
 width              = 300

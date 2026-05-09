@@ -2,21 +2,21 @@
 name        = "Catppuccin System"
 version     = "1.0.0"
 author      = "windy"
-description = "CPU, RAM, disk, and network status in a Catppuccin Mocha card"
-tags        = ["system", "cpu", "ram", "catppuccin", "minimal"]
+description = "CPU, RAM, Disk ve Ağ — Catppuccin Mocha tema"
+tags        = ["system", "cpu", "ram", "catppuccin"]
 
 [window]
-width              = 340
-height             = 400
+width              = 240
+height             = 310
 x                  = 60
 y                  = 500
-transparency       = false
-hide_on_fullscreen = false
+transparency       = true
+hide_on_fullscreen = true
 
 [theme]
 background    = "#1e1e2e"
 border        = "#313244"
-border_radius = 14
+border_radius = 16
 accent        = "#cba6f7"
 font_family   = "Segoe UI"
 font_color    = "#cdd6f4"
@@ -82,7 +82,7 @@ value     = "{{cpu.freq_ghz}} GHz · {{cpu.cores}} core"
 x         = 16
 y         = 70
 font_size = 9
-color     = "#cac7c7"
+color     = "#45475a"
 
 # ─── RAM ────────────────────────────────────────────────────────────────────
 [[components]]
@@ -124,7 +124,7 @@ color     = "#bac2de80"
 
 [[components]]
 type      = "text"
-value     = "{{disk.C.free_gb}} GB free"
+value     = "{{disk.C.free_gb}} GB boş"
 x         = "right-16"
 y         = 136
 font_size = 10
